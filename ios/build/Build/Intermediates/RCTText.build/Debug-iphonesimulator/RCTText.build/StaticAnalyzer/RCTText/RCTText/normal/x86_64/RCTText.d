@@ -1,0 +1,21 @@
+dependencies: \
+  /Users/Daniel/Sites/egg-native/node_modules/react-native/Libraries/Text/RCTText.m \
+  /Users/Daniel/Sites/egg-native/node_modules/react-native/Libraries/Text/RCTText.h \
+  /Users/Daniel/Sites/egg-native/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTUtils.h \
+  /Users/Daniel/Sites/egg-native/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTAssert.h \
+  /Users/Daniel/Sites/egg-native/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTDefines.h \
+  /Users/Daniel/Sites/egg-native/ios/build/Build/Products/Debug-iphonesimulator/include/React/UIView+React.h \
+  /Users/Daniel/Sites/egg-native/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTComponent.h \
+  /Users/Daniel/Sites/egg-native/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGEnums.h \
+  /Users/Daniel/Sites/egg-native/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGMacros.h \
+  /Users/Daniel/Sites/egg-native/node_modules/react-native/Libraries/Text/RCTShadowText.h \
+  /Users/Daniel/Sites/egg-native/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTShadowView.h \
+  /Users/Daniel/Sites/egg-native/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTRootView.h \
+  /Users/Daniel/Sites/egg-native/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridge.h \
+  /Users/Daniel/Sites/egg-native/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridgeDelegate.h \
+  /Users/Daniel/Sites/egg-native/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTJavaScriptLoader.h \
+  /Users/Daniel/Sites/egg-native/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridgeModule.h \
+  /Users/Daniel/Sites/egg-native/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTFrameUpdate.h \
+  /Users/Daniel/Sites/egg-native/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTInvalidating.h \
+  /Users/Daniel/Sites/egg-native/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/Yoga.h \
+  /Users/Daniel/Sites/egg-native/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTTextDecorationLineType.h

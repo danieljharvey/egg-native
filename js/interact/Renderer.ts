@@ -8,6 +8,9 @@ import { Player } from "./Player";
 import { Tile } from "./Tile";
 import { Utils } from "./Utils";
 
+import { Image } from "react-native-canvas";
+import { playerImages } from "../assets/base64/players"
+
 const SPRITE_SIZE: number = 64;
 const OFFSET_DIVIDE: number = 100;
 
@@ -17,6 +20,7 @@ export class Renderer {
   protected tiles: object;
   protected playerTypes: object;
   protected boardSize: BoardSize;
+  protected canvasCtx
   protected canvas: Canvas;
 
   protected animationHandle: number; // used only in rotations
@@ -40,16 +44,18 @@ export class Renderer {
     tiles: object,
     playerTypes: object,
     boardSize: BoardSize,
+    canvasCtx,
     canvas: Canvas,
     loadCallback: () => void
   ) {
     this.tiles = tiles;
     this.playerTypes = playerTypes;
     this.boardSize = boardSize;
+    this.canvasCtx = canvasCtx;
     this.canvas = canvas;
     this.loadCallback = loadCallback;
     // this.loadTilePalette(tiles);
-    this.loadPlayerPalette();
+    this.loadPlayerPalette(this.canvas);
   }
 
   public render(
@@ -105,12 +111,38 @@ export class Renderer {
     return savedData;
   }
 
-  protected loadTilePalette(tiles) {
+  protected loadTilePalette(canvas, tiles) {
     this.totalTiles = this.tilesLoaded = 0;
     for (const i in tiles) {
       if (tiles[i] !== undefined) {
         this.totalTiles++;
         const thisTile = tiles[i];
+
+        const imageName = playerType.img
+        
+                const base64 = playerImages[imageName]
+        
+                const width = (SPRITE_SIZE * playerType.frames)
+                const height = SPRITE_SIZE
+        
+                const playerImage = new Image(canvas, height, width);
+        
+                playerImage.width = width.toString()
+                playerImage.height = height.toString()
+        
+                playerImage.src = base64
+        
+                playerImage.addEventListener("load", () => {
+                  this.markPlayerImageAsLoaded(imageName);
+                });
+        
+                this.playerImages[imageName] = {
+                  image: playerImage,
+                  ready: false
+                };      
+
+
+
         const tileImage = document.createElement("img");
         tileImage.setAttribute("src", this.getTileImagePath(thisTile));
         tileImage.setAttribute("width", SPRITE_SIZE.toString());
@@ -130,42 +162,37 @@ export class Renderer {
     }
   }
 
-  protected loadPlayerPalette() {
+  protected loadPlayerPalette(canvas) {
     for (const i in this.playerTypes) {
       if (this.playerTypes[i] !== undefined) {
-        console.log("loadPlayerPalette", this.playerTypes[i]);
-        // Do something with the base64 string
+        const playerType = this.playerTypes[i]
         
-        image.src = cacti;
-        image.addEventListener("load", () => {
-          console.log("IMAGE LOADED");
-          drawImage(ctx, image);
-        });
-      
-        image.width = SPRITE_SIZE.toString();
-        image.height = SPRITE_SIZE.toString();
-        console.log(image);
+        const imageName = playerType.img
 
+        const base64 = playerImages[imageName]
 
+        const width = (SPRITE_SIZE * playerType.frames)
+        const height = SPRITE_SIZE
 
-
-        const playerType = this.playerTypes[i];
         const playerImage = new Image(canvas, height, width);
-        playerImage.setAttribute("src", this.getTileImagePath(playerType));
-        playerImage.addEventListener(
-          "load",
-          () => {
-            this.markPlayerImageAsLoaded(playerType.img);
-          },
-          false
-        );
-        this.playerImages[playerType.img] = {
+
+        playerImage.width = width.toString()
+        playerImage.height = height.toString()
+
+        playerImage.src = base64
+
+        playerImage.addEventListener("load", () => {
+          this.markPlayerImageAsLoaded(imageName);
+        });
+
+        this.playerImages[imageName] = {
           image: playerImage,
           ready: false
-        };
+        };      
       }
     }
   }
+
 
   protected markPlayerImageAsLoaded(img: string) {
     this.playerImages[img].ready = true;

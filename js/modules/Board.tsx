@@ -69,14 +69,21 @@ const drawImage = (ctx, img) => {
 
 export default class Board extends React.Component {
   public handleCanvas = canvas => {
-    const canvasClass = new CanvasClass(canvas);
+    const canvasCtx = new CanvasClass(canvas);
     // change to props
     const size = 12;
     const boardSize = new BoardSize(size);
 
-    const renderer = new Renderer({}, players, boardSize, canvasClass, () => {
-      console.log("renderer loaded!");
-    });
+    const renderer = new Renderer(
+      {},
+      players,
+      boardSize,
+      canvasCtx,
+      canvas,
+      () => {
+        console.log("renderer loaded!");
+      }
+    );
   };
 
   public render() {

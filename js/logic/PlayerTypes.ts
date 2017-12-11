@@ -3,7 +3,7 @@ export class PlayerTypes {
     return {
       "blue-egg": {
         frames: 18,
-        img: "egg-sprite-blue.png",
+        img: "egg-sprite-blue",
         multiplier: 5,
         title: "It is of course the blue egg",
         type: "blue-egg",
@@ -11,7 +11,7 @@ export class PlayerTypes {
       },
       egg: {
         frames: 18,
-        img: "egg-sprite.png",
+        img: "egg-sprite",
         multiplier: 1,
         title: "It is of course the egg",
         type: "egg",
@@ -19,7 +19,7 @@ export class PlayerTypes {
       },
       "red-egg": {
         frames: 18,
-        img: "egg-sprite-red.png",
+        img: "egg-sprite-red",
         multiplier: 2,
         title: "It is of course the red egg",
         type: "red-egg",
@@ -28,7 +28,7 @@ export class PlayerTypes {
       "silver-egg": {
         fallSpeed: 20,
         frames: 1,
-        img: "silver-egg.png",
+        img: "silver-egg",
         moveSpeed: 0,
         multiplier: 10,
         title: "It is of course the silver egg",
@@ -37,7 +37,7 @@ export class PlayerTypes {
       },
       "yellow-egg": {
         frames: 18,
-        img: "egg-sprite-yellow.png",
+        img: "egg-sprite-yellow",
         multiplier: 10,
         title: "It is of course the yellow egg",
         type: "yellow-egg",
@@ -45,7 +45,7 @@ export class PlayerTypes {
       },
       "rainbow-egg": {
         frames: 18,
-        img: "egg-rainbow.png",
+        img: "egg-rainbow",
         multiplier: 1,
         title: "It goes without saying that this is the rainbow egg",
         type: "rainbow-egg",
@@ -53,7 +53,7 @@ export class PlayerTypes {
       },
       blade: {
         frames: 18,
-        img: "blade-sprite.png",
+        img: "blade-sprite",
         title: "It is the mean spirited blade",
         type: "blade",
         value: 0,
@@ -61,7 +61,7 @@ export class PlayerTypes {
       },
       "find-blade": {
         frames: 18,
-        img: "find-blade-sprite.png",
+        img: "find-blade-sprite",
         title: "It is the mean spirited blade",
         type: "find-blade",
         value: 0,

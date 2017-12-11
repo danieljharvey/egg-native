@@ -33,7 +33,7 @@ export class Jetpack {
   protected levels: Levels; // Levels object
   protected boardSize: BoardSize; // BoardSize object
   protected canvas: Canvas; // Canvas object
-  
+
   // big pile of moves
   protected gameStates: GameState[];
 

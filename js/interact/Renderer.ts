@@ -1,6 +1,6 @@
 import { Board } from "./Board";
 import { BoardSize } from "./BoardSize";
-import { Canvas } from "./Canvas";
+import CanvasClass from "./Canvas";
 import { Coords } from "./Coords";
 import { Editor } from "./Editor";
 import * as Map from "./Map";
@@ -9,7 +9,8 @@ import { Tile } from "./Tile";
 import { Utils } from "./Utils";
 
 import { Image } from "react-native-canvas";
-import { playerImages } from "../assets/base64/players"
+import { playerImages } from "../assets/base64/players";
+import { tileImages } from "../assets/base64/tiles";
 
 const SPRITE_SIZE: number = 64;
 const OFFSET_DIVIDE: number = 100;
@@ -20,8 +21,7 @@ export class Renderer {
   protected tiles: object;
   protected playerTypes: object;
   protected boardSize: BoardSize;
-  protected canvasCtx
-  protected canvas: Canvas;
+  protected canvas: CanvasClass;
 
   protected animationHandle: number; // used only in rotations
 
@@ -44,17 +44,15 @@ export class Renderer {
     tiles: object,
     playerTypes: object,
     boardSize: BoardSize,
-    canvasCtx,
-    canvas: Canvas,
+    canvas: CanvasClass,
     loadCallback: () => void
   ) {
     this.tiles = tiles;
     this.playerTypes = playerTypes;
     this.boardSize = boardSize;
-    this.canvasCtx = canvasCtx;
     this.canvas = canvas;
     this.loadCallback = loadCallback;
-    // this.loadTilePalette(tiles);
+    this.loadTilePalette(this.canvas, tiles);
     this.loadPlayerPalette(this.canvas);
   }
 
@@ -118,42 +116,24 @@ export class Renderer {
         this.totalTiles++;
         const thisTile = tiles[i];
 
-        const imageName = playerType.img
-        
-                const base64 = playerImages[imageName]
-        
-                const width = (SPRITE_SIZE * playerType.frames)
-                const height = SPRITE_SIZE
-        
-                const playerImage = new Image(canvas, height, width);
-        
-                playerImage.width = width.toString()
-                playerImage.height = height.toString()
-        
-                playerImage.src = base64
-        
-                playerImage.addEventListener("load", () => {
-                  this.markPlayerImageAsLoaded(imageName);
-                });
-        
-                this.playerImages[imageName] = {
-                  image: playerImage,
-                  ready: false
-                };      
+        const imageName = thisTile.img;
 
+        const base64 = tileImages[imageName];
 
+        const width = SPRITE_SIZE;
+        const height = SPRITE_SIZE;
 
-        const tileImage = document.createElement("img");
-        tileImage.setAttribute("src", this.getTileImagePath(thisTile));
-        tileImage.setAttribute("width", SPRITE_SIZE.toString());
-        tileImage.setAttribute("height", SPRITE_SIZE.toString());
-        tileImage.addEventListener(
-          "load",
-          () => {
-            this.markTileImageAsLoaded(thisTile.id);
-          },
-          false
-        );
+        const tileImage = new Image(canvas.getCanvas(), height, width);
+
+        tileImage.width = width.toString();
+        tileImage.height = height.toString();
+
+        tileImage.src = base64;
+
+        tileImage.addEventListener("load", () => {
+          this.markTileImageAsLoaded(thisTile.id);
+        });
+
         this.tileImages[thisTile.id] = {
           image: tileImage,
           ready: false
@@ -165,21 +145,21 @@ export class Renderer {
   protected loadPlayerPalette(canvas) {
     for (const i in this.playerTypes) {
       if (this.playerTypes[i] !== undefined) {
-        const playerType = this.playerTypes[i]
-        
-        const imageName = playerType.img
+        const playerType = this.playerTypes[i];
 
-        const base64 = playerImages[imageName]
+        const imageName = playerType.img;
 
-        const width = (SPRITE_SIZE * playerType.frames)
-        const height = SPRITE_SIZE
+        const base64 = playerImages[imageName];
 
-        const playerImage = new Image(canvas, height, width);
+        const width = SPRITE_SIZE * playerType.frames;
+        const height = SPRITE_SIZE;
 
-        playerImage.width = width.toString()
-        playerImage.height = height.toString()
+        const playerImage = new Image(canvas.getCanvas(), height, width);
 
-        playerImage.src = base64
+        playerImage.width = width.toString();
+        playerImage.height = height.toString();
+
+        playerImage.src = base64;
 
         playerImage.addEventListener("load", () => {
           this.markPlayerImageAsLoaded(imageName);
@@ -188,11 +168,10 @@ export class Renderer {
         this.playerImages[imageName] = {
           image: playerImage,
           ready: false
-        };      
+        };
       }
     }
   }
-
 
   protected markPlayerImageAsLoaded(img: string) {
     this.playerImages[img].ready = true;

@@ -4,14 +4,14 @@ export class TileSet {
       1: {
         background: true,
         id: 1,
-        img: "sky.png",
+        img: "sky",
         needsDraw: true,
         title: "Sky"
       },
       2: {
         background: false,
         id: 2,
-        img: "fabric.png",
+        img: "fabric",
         needsDraw: true,
         title: "Fabric"
       },
@@ -20,7 +20,7 @@ export class TileSet {
         collectable: 1,
         frontLayer: true,
         id: 3,
-        img: "cacti.png",
+        img: "cacti",
         needsDraw: true,
         title: "Cacti"
       },
@@ -29,7 +29,7 @@ export class TileSet {
         collectable: 10,
         frontLayer: true,
         id: 4,
-        img: "plant.png",
+        img: "plant",
         needsDraw: true,
         title: "Plant"
       },
@@ -37,35 +37,35 @@ export class TileSet {
         background: false,
         breakable: true,
         id: 5,
-        img: "crate.png",
+        img: "crate",
         needsDraw: true,
         title: "Crate"
       },
       8: {
         background: false,
         id: 8,
-        img: "work-surface-2.png",
+        img: "work-surface-2",
         needsDraw: true,
         title: "Work surface 2"
       },
       9: {
         background: false,
         id: 9,
-        img: "work-surface-3.png",
+        img: "work-surface-3",
         needsDraw: true,
         title: "Work surface 3"
       },
       10: {
         background: false,
         id: 10,
-        img: "work-surface-4.png",
+        img: "work-surface-4",
         needsDraw: true,
         title: "Work surface 4"
       },
       11: {
         background: false,
         id: 11,
-        img: "tile.png",
+        img: "tile",
         needsDraw: true,
         title: "Tiles"
       },
@@ -75,7 +75,7 @@ export class TileSet {
         createPlayer: "egg",
         frontLayer: true,
         id: 12,
-        img: "egg-cup.png",
+        img: "egg-cup",
         needsDraw: true,
         title: "Egg Cup"
       },
@@ -85,7 +85,7 @@ export class TileSet {
         dontAdd: true,
         frontLayer: true,
         id: 13,
-        img: "toast.png",
+        img: "toast",
         needsDraw: true,
         title: "Toast"
       },
@@ -94,7 +94,7 @@ export class TileSet {
         background: true,
         frontLayer: true,
         id: 14,
-        img: "door.png",
+        img: "door",
         needsDraw: true,
         title: "Door"
       },
@@ -102,14 +102,14 @@ export class TileSet {
         background: true,
         frontLayer: true,
         id: 15,
-        img: "pink-door-open.png",
+        img: "pink-door-open",
         needsDraw: true,
         title: "Pink door open"
       },
       16: {
         background: false,
         id: 16,
-        img: "pink-door.png",
+        img: "pink-door",
         needsDraw: true,
         title: "Pink door closed"
       },
@@ -118,7 +118,7 @@ export class TileSet {
         background: true,
         frontLayer: true,
         id: 17,
-        img: "pink-switch.png",
+        img: "pink-switch",
         needsDraw: true,
         title: "Pink door switch"
       },
@@ -126,14 +126,14 @@ export class TileSet {
         background: true,
         frontLayer: true,
         id: 18,
-        img: "green-door-open.png",
+        img: "green-door-open",
         needsDraw: true,
         title: "Green door open"
       },
       19: {
         background: false,
         id: 19,
-        img: "green-door.png",
+        img: "green-door",
         needsDraw: true,
         title: "Green door closed"
       },
@@ -142,7 +142,7 @@ export class TileSet {
         background: true,
         frontLayer: true,
         id: 20,
-        img: "green-switch.png",
+        img: "green-switch",
         needsDraw: true,
         title: "Green door switch"
       },
@@ -151,7 +151,7 @@ export class TileSet {
         createPlayer: "silver-egg",
         frontLayer: true,
         id: 21,
-        img: "silver-egg-cup.png",
+        img: "silver-egg-cup",
         needsDraw: true,
         title: "Silver Egg Cup"
       },
@@ -160,7 +160,7 @@ export class TileSet {
         createPlayer: "blade",
         frontLayer: true,
         id: 22,
-        img: "blade-egg-cup.png",
+        img: "blade-egg-cup",
         needsDraw: true,
         title: "Blade egg cup"
       },
@@ -169,7 +169,7 @@ export class TileSet {
         createPlayer: "find-blade",
         frontLayer: true,
         id: 23,
-        img: "find-blade-egg-cup.png",
+        img: "find-blade-egg-cup",
         needsDraw: true,
         title: "Find-blade egg cup"
       },
@@ -179,7 +179,7 @@ export class TileSet {
         action: "split-eggs",
         needsDraw: true,
         frontLayer: true,
-        img: "egg-splitter.png",
+        img: "egg-splitter",
         title: "It is the egg splitter"
       }
     };

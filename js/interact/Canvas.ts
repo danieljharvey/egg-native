@@ -3,10 +3,21 @@
 export default class Canvas {
   protected canvas: HTMLCanvasElement;
   protected ctx: CanvasRenderingContext2D;
+  protected width: number;
+  protected height: number;
 
-  constructor(canvas: HTMLCanvasElement) {
+  constructor(canvas: HTMLCanvasElement, width, height) {
     this.canvas = canvas;
     this.ctx = canvas.getContext("2d");
+    this.width = width;
+    this.height = height;
+    this.sizeCanvas(width, height);
+  }
+
+  public sizeCanvas(width, height) {
+    const size = Math.min(width, height);
+    this.canvas.width = size;
+    this.canvas.height = size;
   }
 
   public getDrawingContext() {
@@ -19,6 +30,15 @@ export default class Canvas {
 
   public wipeCanvas(fillStyle: string): void {
     this.ctx.fillStyle = fillStyle;
+    console.log("width", this.canvas.width);
+    console.log("height", this.canvas.height);
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+  }
+
+  public calcTileSize(boardSize) {
+    const { width, height } = boardSize.getData();
+    const tileSize = Math.floor(this.width / width);
+    console.log(this.width, tileSize);
+    return tileSize;
   }
 }

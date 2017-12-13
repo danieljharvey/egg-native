@@ -1,12 +1,14 @@
-import { Board } from "./Board";
-import { BoardSize } from "./BoardSize";
-import CanvasClass from "./Canvas";
-import { Coords } from "./Coords";
-import { Editor } from "./Editor";
-import * as Map from "./Map";
-import { Player } from "./Player";
-import { Tile } from "./Tile";
-import { Utils } from "./Utils";
+import { Board } from "../objects/Board";
+import { BoardSize } from "../objects/BoardSize";
+import { Coords } from "../objects/Coords";
+import { Player } from "../objects/Player";
+import { Tile } from "../objects/Tile";
+
+import CanvasClass from "../interact/Canvas";
+
+import * as Map from "../logic/Map";
+
+import { Utils } from "../logic/Utils";
 
 import { Image } from "react-native-canvas";
 import { playerImages } from "../assets/base64/players";
@@ -69,11 +71,6 @@ export class Renderer {
     this.renderFrontLayerBoard(board, renderMap, renderAngle);
   }
 
-  public resize(boardSize: BoardSize) {
-    this.boardSize = boardSize;
-    this.tileSize = this.canvas.sizeCanvas(boardSize);
-  }
-
   public drawRotatingBoard(
     clockwise: boolean,
     moveSpeed: number,
@@ -93,10 +90,6 @@ export class Renderer {
     } else {
       this.drawRotated(savedData, -1, 0, -90, moveSpeed, completed);
     }
-  }
-
-  public getTileImagePath(tile: Tile): string {
-    return this.canvas.imagesFolder + tile.img;
   }
 
   protected getImageData(canvas: HTMLCanvasElement): HTMLImageElement {
@@ -194,6 +187,7 @@ export class Renderer {
     ctx.globalAlpha = 1;
     const tiles = board.getAllTiles();
     tiles.map(tile => {
+      console.log(tile)
       const needsDraw = renderMap[tile.x][tile.y];
       if (needsDraw === false) {
         this.showUnrenderedTile(tile.x, tile.y);

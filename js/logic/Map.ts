@@ -1,10 +1,11 @@
-import { Board } from "./Board";
-import { BoardSize } from "./BoardSize";
-import { Coords } from "./Coords";
-import { Player } from "./Player";
-import { Tile } from "./Tile";
-import { TileSet } from "./TileSet";
-import { Utils } from "./Utils";
+import { Board } from "../objects/Board";
+import { BoardSize } from "../objects/BoardSize";
+import { Coords } from "../objects/Coords";
+import { Player } from "../objects/Player";
+import { Tile } from "../objects/Tile";
+
+import { TileSet } from "../logic/TileSet";
+import { Utils } from "../logic/Utils";
 
 // map is just a class full of functions that is created for manipulating the board
 // should not contain any meaningful state of it's own (currently does, but reducing this)

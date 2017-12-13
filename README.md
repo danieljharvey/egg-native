@@ -1,4 +1,4 @@
-#egg-native
+# egg-native
 
 React Native port of [It Is The Egg](https://www.itistheegg.com) - repo [here](https://github.com/danieljharvey/it-is-the-egg).
 

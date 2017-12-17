@@ -38,7 +38,6 @@ export default class Canvas {
   public calcTileSize(boardSize) {
     const { width, height } = boardSize.getData();
     const tileSize = Math.floor(this.width / width);
-    console.log(this.width, tileSize);
     return tileSize;
   }
 }

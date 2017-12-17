@@ -12,6 +12,7 @@ import { GameState } from "../objects/GameState";
 import { Player } from "../objects/Player";
 import { Tile } from "../objects/Tile";
 
+import { RenderMap } from "../logic/RenderMap";
 import { doAction } from "../logic/TheEgg";
 
 import * as Map from "../logic/Map";
@@ -109,23 +110,76 @@ const getNewGameState = (
 };
 
 const eventLoop = (time: number, lastTime: number) => {
+  const action = "";
+  const timePassed = calcTimePassed(time, lastTime);
+  gameCycle(timePassed, action);
+  // const action = this.getNextAction();
+
   const anim = window.requestAnimationFrame(newTime =>
     eventLoop(newTime, time)
   );
-
-  const timePassed = calcTimePassed(time, lastTime);
-
-  // const action = this.getNextAction();
-  const action = "";
-
-  gameCycle(timePassed, action);
 };
 
 const gameCycle = (timePassed: number, action: string) => {
   const gameState = currentGameState;
   const nextGameState = getNewGameState(gameState, action, timePassed);
+  renderChanges(gameState, nextGameState);
+};
+
+const renderChanges = (oldGameState: GameState, newGameState: GameState) => {
+  const boardSize = new BoardSize(newGameState.board.getLength());
+
+  // if rotated everything changes anyway
+  if (oldGameState.rotateAngle !== newGameState.rotateAngle) {
+    return renderEverything(newGameState);
+  }
+
+  // player map is covering old shit up
+  const playerRenderMap = createRenderMapFromPlayers(
+    oldGameState.players,
+    boardSize
+  );
+
+  // render changes
+  const boardRenderMap = RenderMap.createRenderMapFromBoards(
+    oldGameState.board,
+    newGameState.board
+  );
+
+  const finalRenderMap = RenderMap.combineRenderMaps(
+    playerRenderMap,
+    boardRenderMap
+  );
+
   const renderer = currentRenderer;
-  renderer.render(nextGameState.board, renderMap, nextGameState.players, 0);
+  renderer.render(
+    newGameState.board,
+    finalRenderMap,
+    newGameState.players,
+    newGameState.rotateAngle
+  );
+};
+
+const renderEverything = (gameState: GameState) => {
+  const boardSize = new BoardSize(gameState.board.getLength());
+  const blankMap = RenderMap.createRenderMap(boardSize.width, true);
+  this.renderer.render(
+    gameState.board,
+    blankMap,
+    gameState.players,
+    gameState.rotateAngle
+  );
+};
+
+// create empty renderMap based on boardSize, and then apply each player's position to it
+const createRenderMapFromPlayers = (
+  players: Player[],
+  boardSize: BoardSize
+): boolean[][] => {
+  const blankMap = RenderMap.createRenderMap(boardSize.width, false);
+  return players.reduce((map, player) => {
+    return RenderMap.addPlayerToRenderMap(player, map);
+  }, blankMap);
 };
 
 const calcTimePassed = (time: number, lastTime: number): number => {

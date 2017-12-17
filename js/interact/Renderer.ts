@@ -139,7 +139,6 @@ export class Renderer {
     for (const i in this.playerTypes) {
       if (this.playerTypes[i] !== undefined) {
         const playerType = this.playerTypes[i];
-
         const imageName = playerType.img;
 
         const base64 = playerImages[imageName];
@@ -187,7 +186,6 @@ export class Renderer {
     ctx.globalAlpha = 1;
     const tiles = board.getAllTiles();
     tiles.map(tile => {
-      console.log(tile)
       const needsDraw = renderMap[tile.x][tile.y];
       if (needsDraw === false) {
         this.showUnrenderedTile(tile.x, tile.y);
@@ -319,10 +317,10 @@ export class Renderer {
 
     const left = Math.floor(coords.x * tileSize + coords.offsetX * offsetRatio);
     const top = Math.floor(coords.y * tileSize + coords.offsetY * offsetRatio);
-
+    
     const clipLeft = Math.floor(player.currentFrame * SPRITE_SIZE);
     const clipTop = 0;
-
+    
     const image = this.getPlayerImage(player.img);
     if (!image) {
       // console.log('player image not loaded', player.img);

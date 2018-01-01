@@ -30,8 +30,6 @@ export default class Canvas {
 
   public wipeCanvas(fillStyle: string): void {
     this.ctx.fillStyle = fillStyle;
-    console.log("width", this.canvas.width);
-    console.log("height", this.canvas.height);
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
   }
 

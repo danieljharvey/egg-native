@@ -19,7 +19,7 @@ import { SavedLevel } from "./SavedLevel";
 import { doAction } from "./TheEgg";
 import { TileSet } from "./TileSet";
 
-export const handleCanvas = (canvas, levelData) => {
+export const handleCanvas = (canvas, levelData, callback) => {
   const { screenHeight, screenWidth } = getScreenSize();
   const canvasClass = new CanvasClass(canvas, screenWidth, screenHeight);
     // change to props
@@ -37,6 +37,7 @@ export const handleCanvas = (canvas, levelData) => {
       canvasClass.wipeCanvas("#000000");
       eventLoop(renderer, gameState, 1, 0);
       renderEverything(renderer, gameState);
+      callback(renderer)
       // console.log("Renderer loaded!");
     }
   );
@@ -78,7 +79,7 @@ const getBoardFromData = (data): Board => {
   };
   
   // do next move, plop new state on pile, return new state
-  const getNewGameState = (
+  export const getNewGameState = (
     gameState: GameState,
     action: string,
     timePassed: number
@@ -106,7 +107,7 @@ const getBoardFromData = (data): Board => {
     return nextGameState
   };
   
-  const renderChanges = (renderer: Renderer, oldGameState: GameState, newGameState: GameState) => {
+  export const renderChanges = (renderer: Renderer, oldGameState: GameState, newGameState: GameState) => {
     const boardSize = new BoardSize(newGameState.board.getLength());
   
     // if rotated everything changes anyway

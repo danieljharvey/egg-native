@@ -1,5 +1,5 @@
 export const UPDATE_LEVEL_DATA = "UPDATE_LEVEL_DATA";
-export const UPDATE_GAME_STATE = "UPDATE_GAME_STATE";
+export const DO_GAME_MOVE = "DO_GAME_MOVE";
 export const UPDATE_RENDERER = "UPDATE_RENDERER";
 
 export const ROTATE_LEFT = "ROTATE_LEFT";
@@ -13,10 +13,9 @@ export const updateLevelData = levelData => {
   };
 };
 
-export const updateGameState = gameState => {
+export const doGameMove = () => {
   return {
-    type: UPDATE_GAME_STATE,
-    gameState
+    type: DO_GAME_MOVE
   };
 };
 

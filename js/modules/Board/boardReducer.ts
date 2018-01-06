@@ -1,9 +1,11 @@
-import { UPDATE_GAME_STATE, UPDATE_LEVEL_DATA, UPDATE_RENDERER, ROTATE_LEFT, ROTATE_RIGHT, RESET_ACTION } from './boardActions'
+import { DO_GAME_MOVE, UPDATE_LEVEL_DATA, UPDATE_RENDERER, ROTATE_LEFT, ROTATE_RIGHT, RESET_ACTION } from './boardActions'
 
 import Canvas from "../../interact/Canvas"
 import { GameState } from "../../objects/GameState"
 
 import * as levelData from "../../assets/levels/1.json";
+
+import { createInitialGameState, getNewGameState } from "../../logic/EventLoop"
 
 interface IBoardState {
   levelData: {}
@@ -22,16 +24,23 @@ const initialState: IBoardState = {
 }
 
 const board = (state: IBoardState = initialState, action) => {
+  console.log("board reducer...", action)
   switch (action.type) {
     case UPDATE_LEVEL_DATA:
       return {
         ...state,
-        levelData: action.levelData
+        levelData: action.levelData,
+        gameState: createInitialGameState(action.levelData)
       }
-    case UPDATE_GAME_STATE:
+    case DO_GAME_MOVE:
+      // quickly set up inital state here for now
+      const gameState = (state.gameState === null) ? createInitialGameState(state.levelData) : state.gameState
+      const timePassed =10  
+      const newGameState = getNewGameState(gameState, state.nextAction, timePassed)
       return {
         ...state,
-        gameState: action.gameState
+        gameState: newGameState,
+        nextAction: newGameState.outcome
       }
     case UPDATE_RENDERER:
       return {

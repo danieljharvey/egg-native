@@ -8,8 +8,9 @@
 			"es7",
 			"es2015",
 			"es2016"
-		},
-		"exclude": [
-			"node_modules"
 		]
-	}
+	},
+	"exclude": [
+		"node_modules"
+	]
+}

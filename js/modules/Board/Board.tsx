@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableHighlight, View } from "react-native";
 import Canvas, { Image } from "react-native-canvas";
 
 import GestureRecognizer, {
@@ -19,23 +19,57 @@ import * as Map from "../../logic/Map";
 import { fromJS } from "immutable";
 
 import * as EventLoop from "../../logic/EventLoop";
+import { GameState } from "../../objects/GameState";
 
 interface IBoardProps {
   levelData: {};
+  gameState: GameState;
+  rotateLeft: () => any;
+  rotateRight: () => any;
+  doGameMove: () => any;
+  canvas: CanvasClass;
 }
 
-export default class BoardComponent extends React.Component<IBoardProps> {
+interface IBoardState {
+  renderer: any;
+}
+
+export default class BoardComponent extends React.Component<
+  IBoardProps,
+  IBoardState
+> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      renderer: null
+    };
+  }
   public handleCanvas = canvas => {
-    EventLoop.handleCanvas(canvas, this.props.levelData);
+    EventLoop.handleCanvas(canvas, this.props.levelData, renderer => {
+      this.setState({ renderer });
+    });
   };
 
+  public shouldComponentUpdate(nextProps, nextState) {
+    console.log(this.state.renderer);
+    const oldGameState = this.props.gameState;
+    const newGameState = nextProps.gameState;
+    // to stop it fucking up on first load before we have a proper title screen and loading thing
+    if (!oldGameState || !newGameState) {
+      return false;
+    }
+    EventLoop.renderChanges(this.state.renderer, oldGameState, newGameState);
+    return false;
+  }
+
   public render() {
+    console.log("render?");
     const { screenHeight, screenWidth } = EventLoop.getScreenSize();
     const size = Math.min(screenHeight, screenWidth);
     return (
       <GestureRecognizer
-        onSwipeLeft={this.rotateLeft}
-        onSwipeRight={this.rotateRight}
+        onSwipeLeft={() => this.props.rotateLeft()}
+        onSwipeRight={() => this.props.rotateRight()}
       >
         <View style={styles.container}>
           <Canvas
@@ -43,6 +77,9 @@ export default class BoardComponent extends React.Component<IBoardProps> {
             ref={this.handleCanvas}
           />
         </View>
+        <TouchableHighlight onPress={() => this.props.doGameMove()}>
+          <Text>"GO!"</Text>
+        </TouchableHighlight>
       </GestureRecognizer>
     );
   }

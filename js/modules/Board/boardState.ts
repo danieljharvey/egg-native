@@ -2,4 +2,3 @@
 
 import store from 'redux'
 
-export const getRenderer = (s)

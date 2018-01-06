@@ -95,9 +95,9 @@ const getBoardFromData = (data): Board => {
     const nextGameState = gameCycle(timePassed, action, renderer, gameState);
     // const action = this.getNextAction();
   
-    const anim = window.requestAnimationFrame(newTime =>
+    /*const anim = window.requestAnimationFrame(newTime =>
       eventLoop(renderer, nextGameState, newTime, time)
-    );
+    ); */
   };
   
   const gameCycle = (timePassed: number, action: string, renderer: Renderer, gameState: GameState): GameState => {

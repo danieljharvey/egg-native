@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import Board from "./Board"
+import { rotateLeft, rotateRight } from "./boardActions"
 
 const mapStateToProps = state => {
   return {
@@ -9,9 +10,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    /*onTodoClick: id => {
-      dispatch(toggleTodo(id))
-    }*/
+    rotateLeft: () => {
+      dispatch(rotateLeft())
+    },
+    rotateRight: () => {
+      dispatch(rotateRight())
+    },
   }
 }
 

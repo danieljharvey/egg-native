@@ -4,7 +4,7 @@
   "private": true,
   "devDependencies": {
     "@types/react": "^16.0.25",
-    "@types/react-native": "^0.50.7",
+    "@types/react-native": "^0.51.9",
     "babel-preset-react-native-stage-0": "^1.0.1",
     "jest": "^21.2.1",
     "react-native-typescript-transformer": "^1.1.4",
@@ -19,7 +19,8 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "test": "node node_modules/jest/bin/jest.js --watch",
-    "prettier": "prettier --write 'js/**/*.ts' 'js/**/*.tsx' 'js/**/*.js'"
+    "prettier": "prettier --write 'js/**/*.ts' 'js/**/*.tsx' 'js/**/*.js'",
+    "tsc:watch": "tsc -w"
   },
   "jest": {
     "transform": {
@@ -33,6 +34,8 @@
     ]
   },
   "dependencies": {
+    "@types/jest": "^22.0.1",
+    "@types/node": "^8.5.7",
     "immutable": "^3.8.2",
     "ramda": "^0.25.0",
     "ramda-ts": "^0.1.2",
@@ -40,6 +43,7 @@
     "react-native": "^0.49.5",
     "react-native-canvas": "^0.1.20",
     "react-native-fs": "^2.8.5",
+    "react-native-swipe-gestures": "^1.0.2",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "tsmonad": "^0.8.0"

@@ -6,13 +6,13 @@
   version "22.0.1"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-22.0.1.tgz#6370a6d60cce3845e4cd5d00bf65f654264685bc"
 
-"@types/node@*", "@types/node@^4.0.30":
-  version "4.2.23"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-4.2.23.tgz#9241f00d64eb91084f68367746ef10d5fb2f2fc4"
-
-"@types/node@^8.5.7":
+"@types/node@*", "@types/node@^8.5.7":
   version "8.5.7"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.5.7.tgz#9c498c35af354dcfbca3790fb2e81129e93cf0e2"
+
+"@types/node@^4.0.30":
+  version "4.2.23"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-4.2.23.tgz#9241f00d64eb91084f68367746ef10d5fb2f2fc4"
 
 "@types/react-native@^0.51.9":
   version "0.51.9"
@@ -3617,6 +3617,10 @@ react-native-fs@^2.8.5:
   dependencies:
     base-64 "^0.1.0"
     utf8 "^2.1.1"
+
+react-native-image-to-base64@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-image-to-base64/-/react-native-image-to-base64-0.1.0.tgz#195fd8ab0348dd72d1fa8a45778ef0cac835ba5b"
 
 react-native-swipe-gestures@^1.0.2:
   version "1.0.2"

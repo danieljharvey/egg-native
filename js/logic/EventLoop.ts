@@ -160,7 +160,7 @@ const getBoardFromData = (data): Board => {
     }, blankMap);
   };
   
-  const calcTimePassed = (time: number, lastTime: number): number => {
+  export const calcTimePassed = (time: number, lastTime: number): number => {
     const difference = Math.min(time - lastTime, 20);
     return difference;
   };

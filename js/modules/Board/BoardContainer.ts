@@ -1,12 +1,13 @@
 import { connect } from 'react-redux'
 import Board from "./Board"
-import { doGameMove, rotateLeft, rotateRight } from "./boardActions"
+import { doGameMove, rotateLeft, rotateRight, togglePause } from "./boardActions"
 
 const mapStateToProps = state => {
   return {
     levelData: state.board.levelData,
     gameState: state.board.gameState,
-    canvas: state.board.canvas
+    canvas: state.board.canvas,
+    paused: state.board.paused
   }
 }
 
@@ -18,7 +19,8 @@ const mapDispatchToProps = dispatch => {
     rotateRight: () => {
       dispatch(rotateRight())
     },
-    doGameMove: () => dispatch(doGameMove())
+    doGameMove: (newTime) => dispatch(doGameMove(newTime)),
+    togglePause: () => dispatch(togglePause())
   }
 }
 

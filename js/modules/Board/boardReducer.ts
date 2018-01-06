@@ -1,48 +1,62 @@
-import { DO_GAME_MOVE, UPDATE_LEVEL_DATA, UPDATE_RENDERER, ROTATE_LEFT, ROTATE_RIGHT, RESET_ACTION } from './boardActions'
+import { DO_GAME_MOVE, UPDATE_LEVEL_DATA, UPDATE_RENDERER, ROTATE_LEFT, ROTATE_RIGHT, RESET_ACTION, TOGGLE_PAUSE } from './boardActions'
 
 import Canvas from "../../interact/Canvas"
 import { GameState } from "../../objects/GameState"
 
-import * as levelData from "../../assets/levels/1.json";
+import * as savedLevelData from "../../assets/levels/1.json";
 
-import { createInitialGameState, getNewGameState } from "../../logic/EventLoop"
+import { calcTimePassed, createInitialGameState, getNewGameState } from "../../logic/EventLoop"
 
 interface IBoardState {
   levelData: {}
   gameState: GameState | null
   canvas: Canvas,
   nextAction: string,
-  paused: boolean
+  paused: boolean,
+  lastTime: number
 }
 
 const initialState: IBoardState = {
-  levelData,
+  levelData: savedLevelData,
   gameState: null,
   canvas: null,
   nextAction: "",
-  paused: false
+  paused: false,
+  lastTime: 0
+}
+
+const initialBoard = (state, levelData) => {
+  return {
+    ...state,
+    levelData,
+    gameState: createInitialGameState(levelData)
+  }
 }
 
 const board = (state: IBoardState = initialState, action) => {
   switch (action.type) {
     case UPDATE_LEVEL_DATA:
-      return {
-        ...state,
-        levelData: action.levelData,
-        gameState: createInitialGameState(action.levelData)
-      }
+      return initialBoard(state, action.levelData)
     case DO_GAME_MOVE:
+      
       if (state.paused === true) {
         return state
       }
+
+      if (state.gameState && state.gameState.outcome === 'complete') {
+        // start over
+        return initialBoard(state, state.levelData)
+      }
+
       // quickly set up inital state here for now
       const gameState = (state.gameState === null) ? createInitialGameState(state.levelData) : state.gameState
-      const timePassed =20  
+      const timePassed = calcTimePassed(action.newTime, state.lastTime)
       const newGameState = getNewGameState(gameState, state.nextAction, timePassed)
       return {
         ...state,
         gameState: newGameState,
-        nextAction: newGameState.outcome
+        nextAction: newGameState.outcome,
+        lastTime: action.newTime
       }
     case UPDATE_RENDERER:
       return {
@@ -59,10 +73,10 @@ const board = (state: IBoardState = initialState, action) => {
         ...state,
         nextAction: "rotateRight"
       }
-    case RESET_ACTION:
+    case TOGGLE_PAUSE:
       return {
         ...state,
-        nextAction: ""
+        paused: !state.paused
       }
     default:
       return state

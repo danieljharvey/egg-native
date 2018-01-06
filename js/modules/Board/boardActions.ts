@@ -4,7 +4,8 @@ export const UPDATE_RENDERER = "UPDATE_RENDERER";
 
 export const ROTATE_LEFT = "ROTATE_LEFT";
 export const ROTATE_RIGHT = "ROTATE_RIGHT";
-export const RESET_ACTION = "RESET_ACTION";
+
+export const TOGGLE_PAUSE = "TOGGLE_PAUSE";
 
 export const updateLevelData = levelData => {
   return {
@@ -13,9 +14,10 @@ export const updateLevelData = levelData => {
   };
 };
 
-export const doGameMove = () => {
+export const doGameMove = (newTime: number) => {
   return {
-    type: DO_GAME_MOVE
+    type: DO_GAME_MOVE,
+    newTime
   };
 };
 
@@ -38,8 +40,8 @@ export const rotateRight = () => {
   };
 };
 
-export const resetAction = () => {
+export const togglePause = () => {
   return {
-    type: RESET_ACTION
+    type: TOGGLE_PAUSE
   };
 };

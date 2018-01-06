@@ -54,6 +54,18 @@ const doGameMove = (gameState: GameState, timePassed: number): GameState => {
     sortedPlayers
   );
 
+  if (newerGameState.outcome === "completeLevel") {
+    if (levelIsCompleted(newGameState.board, newerGameState.players)) {
+      return newerGameState.modify({
+        outcome: "complete"
+      })
+    } else {
+      return newerGameState.modify({
+        outcome: ""
+      })
+    }
+  }
+
   const colouredPlayers = checkNearlyFinished(
     newerGameState.modify({
       players: splitPlayers
@@ -106,3 +118,36 @@ const doRotate = (gameState: GameState, clockwise: boolean): GameState => {
     rotations
   });
 };
+
+const levelIsCompleted = (board: Board, players: Player[]): boolean => {
+  const collectable = countCollectable(board);
+  const playerCount: number = countPlayers(players);
+
+  if (collectable < 1 && playerCount < 2) {
+    return true;
+  }
+  return false;
+}
+
+ // get total outstanding points left to grab on board
+ const countCollectable = (board: Board): number => {
+  const tiles = board.getAllTiles();
+  return tiles.reduce((collectable, tile) => {
+    const score = tile.get("collectable");
+    if (score > 0) {
+      return collectable + score;
+    } else {
+      return collectable;
+    }
+  }, 0);
+}
+
+const countPlayers = (players: Player[]): number => {
+  return players.reduce((total, player) => {
+    if (player && player.value > 0) {
+      return total + 1;
+    } else {
+      return total;
+    }
+  }, 0);
+}

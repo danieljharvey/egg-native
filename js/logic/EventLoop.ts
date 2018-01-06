@@ -6,8 +6,6 @@ import { GameState } from "../objects/GameState";
 import { Player } from "../objects/Player";
 import { Tile } from "../objects/Tile";
 
-
-
 import CanvasClass from "../interact/Canvas";
 import * as Map from "../logic/Map";
 import { playerTypes } from "../logic/PlayerTypes";

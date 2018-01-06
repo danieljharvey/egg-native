@@ -24,7 +24,6 @@ const initialState: IBoardState = {
 }
 
 const board = (state: IBoardState = initialState, action) => {
-  console.log("board reducer...", action)
   switch (action.type) {
     case UPDATE_LEVEL_DATA:
       return {
@@ -33,9 +32,12 @@ const board = (state: IBoardState = initialState, action) => {
         gameState: createInitialGameState(action.levelData)
       }
     case DO_GAME_MOVE:
+      if (state.paused === true) {
+        return state
+      }
       // quickly set up inital state here for now
       const gameState = (state.gameState === null) ? createInitialGameState(state.levelData) : state.gameState
-      const timePassed =10  
+      const timePassed =20  
       const newGameState = getNewGameState(gameState, state.nextAction, timePassed)
       return {
         ...state,
@@ -50,12 +52,12 @@ const board = (state: IBoardState = initialState, action) => {
     case ROTATE_LEFT:
       return {
         ...state,
-        nextAction: ROTATE_LEFT
+        nextAction: "rotateLeft"
       }
     case ROTATE_RIGHT:
       return {
         ...state,
-        nextAction: ROTATE_RIGHT
+        nextAction: "rotateRight"
       }
     case RESET_ACTION:
       return {

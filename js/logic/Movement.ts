@@ -1,13 +1,16 @@
 import * as _ from "ramda";
-import { Board } from "./Board";
-import { BoardSize } from "./BoardSize";
-import { Coords } from "./Coords";
-import { GameState } from "./GameState";
-import { Jetpack } from "./Jetpack";
+import { Board } from "../objects/Board";
+import { BoardSize } from "../objects/BoardSize";
+import { Coords } from "../objects/Coords";
+import { GameState } from "../objects/GameState";
+import { Player } from "../objects/Player";
+
+import { Jetpack } from "../interact/Jetpack";
+import { Renderer } from "../interact/Renderer";
+
 import * as Map from "./Map";
 import * as PathFinder from "./PathFinder";
-import { Player } from "./Player";
-import { Renderer } from "./Renderer";
+
 import { RenderMap } from "./RenderMap";
 
 import { fromJS, is, List } from "immutable";
@@ -587,7 +590,7 @@ export const incrementPlayerDirection = (timePassed: number) => (
 export const correctPlayerOverflow = (board: Board) => (
   player: Player
 ): Player => {
-  const newCoords = this.correctTileOverflow(player.coords);
+  const newCoords = correctTileOverflow(player.coords);
   const loopedCoords = Map.correctForOverflow(board, newCoords);
 
   if (

@@ -11,5 +11,6 @@ cache:
 env:
   - NODE_ENV='test'
 script:
+  - npm install
   - npm run tsc
   - npm test

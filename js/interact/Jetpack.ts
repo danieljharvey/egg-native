@@ -2,7 +2,7 @@ import * as _ from "ramda";
 
 import { Board } from "../objects/Board";
 import { BoardSize } from "../objects/BoardSize";
-import * as Canvas from "./Canvas";
+import CanvasClass from "./Canvas";
 
 import { Coords } from "../objects/Coords";
 import { GameState } from "../objects/GameState";
@@ -12,12 +12,12 @@ import { Loader } from "../interact/Loader";
 import * as Map from "../logic/Map";
 import { Player } from "../objects/Player";
 
-import { PlayerTypes } from "../logic/PlayerTypes";
+import { playerTypes } from "../logic/PlayerTypes";
 
 import { Renderer } from "../interact/Renderer";
 import { RenderMap } from "../logic/RenderMap";
 import { SavedLevel } from "../logic/SavedLevel";
-import { TheEgg } from "../logic/TheEgg";
+import * as TheEgg from "../logic/TheEgg";
 import { Tile } from "../objects/Tile";
 
 import { TileSet } from "../logic/TileSet";
@@ -37,7 +37,7 @@ export class Jetpack {
   protected renderer: Renderer; // Renderer object
   protected levels: Levels; // Levels object
   protected boardSize: BoardSize; // BoardSize object
-  protected canvas: Canvas; // Canvas object
+  protected canvas: CanvasClass; // Canvas object
 
   // big pile of moves
   protected gameStates: GameState[];
@@ -47,34 +47,11 @@ export class Jetpack {
   protected rotationsUsed: number = 0;
   protected collectable: number = 0; // total points on screen
 
-  protected playerTypes: object = {};
-
   protected defaultBoardSize: number = 20;
   protected checkResize: boolean = false;
 
   protected isCalculating = false;
   protected action: string = "";
-
-  public go(levelID) {
-    // this.bootstrap();
-    this.bindSizeHandler();
-    this.bindKeyboardHandler();
-
-    this.pauseRender();
-    this.getTitleScreen(() => {
-      this.loadLevel(levelID, () => {
-        this.setNextAction("");
-        this.startRender();
-      });
-    });
-  }
-
-  public displayScore(score) {
-    const scoreElement = document.getElementById("score");
-    if (scoreElement) {
-      scoreElement.innerHTML = score.toString();
-    }
-  }
 
   // create player
   public createNewPlayer(
@@ -138,7 +115,7 @@ export class Jetpack {
   // create first "frame" of gameState from board
   // create players etc
   protected getBlankGameState(board: Board): GameState {
-    const players = this.createPlayers(this.playerTypes, board);
+    const players = this.createPlayers(playerTypes, board);
     return new GameState({
       board,
       players
@@ -165,7 +142,7 @@ export class Jetpack {
     action: string,
     timePassed: number
   ): GameState {
-    const theEgg = new TheEgg(this.playerTypes);
+    const theEgg = new TheEgg(playerTypes);
     const newGameState = theEgg.doAction(gameState, action, timePassed);
     this.updateGameState(gameState, newGameState);
     this.playSounds(gameState, newGameState);

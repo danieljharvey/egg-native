@@ -1,17 +1,17 @@
-import { BoardSize } from "./BoardSize";
-import { Canvas } from "./Canvas";
+import { BoardSize } from "../objects/BoardSize";
+import CanvasClass from "./Canvas";
 import { Jetpack } from "./Jetpack";
 
 export class TitleScreen {
   protected jetpack: Jetpack;
-  protected canvas: Canvas;
+  protected canvas: CanvasClass;
   protected imagePath: string; // image to show
   protected width: number; //
   protected height: number;
 
   constructor(
     jetpack: Jetpack,
-    canvas: Canvas,
+    canvas: CanvasClass,
     imagePath: string,
     width: number,
     height: number

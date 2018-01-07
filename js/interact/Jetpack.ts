@@ -2,19 +2,24 @@ import * as _ from "ramda";
 
 import { Board } from "../objects/Board";
 import { BoardSize } from "../objects/BoardSize";
-import { Canvas } from "../interact/Canvas";
+import * as Canvas from "./Canvas";
+
 import { Coords } from "../objects/Coords";
 import { GameState } from "../objects/GameState";
-import { Levels } from "../interact/Levels";
+import { Levels } from "./Levels";
+
 import { Loader } from "../interact/Loader";
 import * as Map from "../logic/Map";
 import { Player } from "../objects/Player";
-import { PlayerTypes } from "../objects/PlayerTypes";
+
+import { PlayerTypes } from "../logic/PlayerTypes";
+
 import { Renderer } from "../interact/Renderer";
 import { RenderMap } from "../logic/RenderMap";
 import { SavedLevel } from "../logic/SavedLevel";
 import { TheEgg } from "../logic/TheEgg";
 import { Tile } from "../objects/Tile";
+
 import { TileSet } from "../logic/TileSet";
 import { Utils } from "../logic/Utils";
 
@@ -64,28 +69,6 @@ export class Jetpack {
     });
   }
 
-  // load static stuff - map/renderer etc will be worked out later
-  public bootstrap(callback) {
-    const boardSize = new BoardSize(this.defaultBoardSize);
-
-    this.canvas = new Canvas(boardSize);
-
-    const playerTypes = new PlayerTypes();
-    this.playerTypes = playerTypes.getPlayerTypes();
-
-    const apiLocation = "http://" + window.location.hostname + "/levels/";
-
-    const loader: Loader = new Loader(apiLocation);
-
-    this.levels = new Levels(loader);
-
-    this.getLevelList(levelList => {
-      const levelID = this.chooseLevelID(levelList);
-      this.levelID = levelID;
-      callback(levelID);
-    });
-  }
-
   public displayScore(score) {
     const scoreElement = document.getElementById("score");
     if (scoreElement) {
@@ -111,15 +94,6 @@ export class Jetpack {
     }
     const player = new Player(params);
     return player;
-  }
-
-  // make this actually fucking rotate, and choose direction, and do the visual effect thing
-  public rotateBoard(clockwise) {
-    if (clockwise) {
-      this.setNextAction("rotateRight");
-    } else {
-      this.setNextAction("rotateLeft");
-    }
   }
 
   protected getTitleScreen(callback) {
@@ -156,126 +130,6 @@ export class Jetpack {
     return levelID;
   }
 
-  protected setNextAction(action: string) {
-    this.action = action;
-  }
-
-  // with no arguments this will cause a blank 12 x 12 board to be created and readied for drawing
-  protected createRenderer(boardSize: BoardSize, completedCallback: () => any) {
-    this.canvas = new Canvas(boardSize);
-    this.boardSize = boardSize;
-
-    const tiles = TileSet.getTiles();
-
-    return new Renderer(
-      this,
-      tiles,
-      this.playerTypes,
-      this.boardSize,
-      this.canvas,
-      () => completedCallback()
-    );
-  }
-
-  protected startRender() {
-    window.cancelAnimationFrame(this.animationHandle);
-    this.showControls();
-    this.animationHandle = window.requestAnimationFrame(time =>
-      this.eventLoop(time, 0)
-    );
-  }
-
-  protected getNextAction(): string {
-    const action = this.action;
-    // this.action = "";
-    return action;
-  }
-
-  // change of heart - this runs all the time and requests various things do stuff
-  // if we are paused, it is nothing, but the loop runs all the same
-  // we are separating one frame ==== one turn
-  // as this does not work for things like rotation
-  // which is one 'turn' but many frames
-
-  protected eventLoop(time: number, lastTime: number) {
-    this.animationHandle = window.requestAnimationFrame(newTime =>
-      this.eventLoop(newTime, time)
-    );
-    const timePassed = this.calcTimePassed(time, lastTime);
-    this.displayFrameRate(timePassed);
-
-    const action = this.getNextAction();
-
-    this.gameCycle(timePassed, action);
-  }
-
-  // this does one step of the game
-  protected gameCycle(timePassed: number, action: string) {
-    const oldGameState = this.getCurrentGameState();
-
-    if (action === "rotateLeft") {
-      const rotatedLeftState = this.getNewGameState(
-        oldGameState,
-        "rotateLeft",
-        timePassed
-      );
-      this.doBoardRotation(false, rotatedLeftState);
-      this.setNextAction("rotatingLeft");
-      return false;
-    } else if (action === "rotateRight") {
-      const rotatedRightState = this.getNewGameState(
-        oldGameState,
-        "rotateRight",
-        timePassed
-      );
-      this.doBoardRotation(true, rotatedRightState);
-      this.setNextAction("rotatingRight");
-      return false;
-    } else if (action.length > 0) {
-      return false;
-    }
-
-    if (oldGameState.outcome.length > 0) {
-      const continueGame = this.checkOutcome(oldGameState);
-      if (continueGame === false) {
-        this.setNextAction("stop");
-      }
-    }
-
-    const newGameState = this.getNewGameState(oldGameState, action, timePassed);
-
-    if (oldGameState.score !== newGameState.score) {
-      this.displayScore(newGameState.score);
-    }
-
-    this.renderChanges(oldGameState, newGameState);
-  }
-
-  // return true for continue play, false for stop
-  protected checkOutcome(gameState: GameState): boolean {
-    if (gameState.outcome === "completeLevel") {
-      // egg is over cup - check whether we've completed
-      const completed = this.completeLevel(gameState.board, gameState.players);
-      if (completed) {
-        this.webAudio.playSound("bright-bell", 0);
-        this.nextLevel(gameState.score, gameState.rotations);
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-  // or at least try
-  protected completeLevel(board: Board, players: Player[]): boolean {
-    const collectable = this.getCollectable(board);
-    const playerCount: number = this.countPlayers(players);
-
-    if (collectable < 1 && playerCount < 2) {
-      return true;
-    }
-    return false;
-  }
 
   protected getBoardFromArray(boardArray): Board {
     return Map.makeBoardFromArray(boardArray);

@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+  - "6.9"
+  - "7.1"
+sudo: false
+cache:
+  directories:
+    - $HOME/.yarn-cache
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+env:
+  - NODE_ENV='test'
+script:
+  - npm run tsc
+  - npm test

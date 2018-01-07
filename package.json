@@ -20,18 +20,15 @@
     "ios": "react-native run-ios",
     "test": "node node_modules/jest/bin/jest.js --watch",
     "prettier": "prettier --write 'js/**/*.ts' 'js/**/*.tsx' 'js/**/*.js'",
-    "tsc:watch": "tsc -w"
+    "tsc:watch": "tsc -w",
+    "tsc": "tsc"
   },
   "jest": {
     "transform": {
       ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
-    ]
+    "moduleFileExtensions": ["ts", "tsx", "js"]
   },
   "dependencies": {
     "@types/jest": "^22.0.1",

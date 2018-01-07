@@ -54,8 +54,8 @@ export default class BoardComponent extends React.Component<
   };
 
   public eventLoop = newTime => {
-    this.props.doGameMove(newTime);
     const anim = window.requestAnimationFrame(this.eventLoop);
+    this.props.doGameMove(newTime);
   };
 
   public shouldComponentUpdate(nextProps, nextState) {

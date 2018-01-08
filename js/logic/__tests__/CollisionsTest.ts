@@ -2,17 +2,9 @@ import { Coords } from "../../objects/Coords";
 import { Player } from "../../objects/Player";
 import * as Collisions from "../Collisions";
 
-import { fromJS, List } from "immutable";
+import { playerTypes } from "../PlayerTypes"
 
-// these aren't being used now so tests will fail - need to change to use actual data
-const playerTypes = {
-  horse: {
-    value: 1
-  },
-  ultimateHorse: {
-    value: 2
-  }
-};
+import { fromJS, List } from "immutable";
 
 test("Ignores same player collision test", () => {
   const player1 = new Player();
@@ -144,10 +136,10 @@ test("Removes correct players", () => {
   expect(actual).toEqual(expected);
 });
 
-test("Create new players", () => {
+test("Combine two players", () => {
   const player1 = new Player({
     id: 1,
-    value: 10,
+    value: 1,
     coords: new Coords({
       x: 100,
       y: 100
@@ -156,33 +148,21 @@ test("Create new players", () => {
 
   const player2 = new Player({
     id: 2,
-    value: 5,
+    value: 1,
     coords: new Coords({
       x: 6,
       y: 6
     })
   });
 
-  const types = {
-    madeUp: {
-      frames: 18,
-      img: "egg-sprite.png",
-      multiplier: 1,
-      title: "It is of course the egg",
-      type: "madeUp",
-      value: 15
-    }
-  };
+  const redEgg = playerTypes['red-egg']
 
   const expected = [
     new Player({
+      ...redEgg,
       id: 1,
-      frames: 18,
-      img: "egg-sprite.png",
-      multiplier: 1,
-      title: "It is of course the egg",
-      type: "madeUp",
-      value: 15,
+      value: 2,
+      
       coords: new Coords({
         x: 100,
         y: 100
@@ -315,7 +295,7 @@ test("Clean combos of immutable", () => {
 test("Create new players actually works", () => {
   const player1 = new Player({
     id: 1,
-    value: 10,
+    value: 1,
     coords: new Coords({
       x: 100,
       y: 100
@@ -324,7 +304,7 @@ test("Create new players actually works", () => {
 
   const player2 = new Player({
     id: 2,
-    value: 5,
+    value: 1,
     coords: new Coords({
       x: 6,
       y: 6
@@ -335,31 +315,17 @@ test("Create new players actually works", () => {
     id: 3,
     value: 5,
     coords: new Coords({
-      x: 100,
-      y: 100
+      x: 102,
+      y: 102
     })
   });
 
-  const types = {
-    madeUp: {
-      frames: 18,
-      img: "egg-sprite.png",
-      multiplier: 1,
-      title: "It is of course the egg",
-      type: "madeUp",
-      value: 15
-    }
-  };
+  const redEgg = playerTypes['red-egg']
 
   const expected = [
     new Player({
+      ...redEgg,
       id: 1,
-      frames: 18,
-      img: "egg-sprite.png",
-      multiplier: 1,
-      title: "It is of course the egg",
-      type: "madeUp",
-      value: 15,
       coords: new Coords({
         x: 100,
         y: 100

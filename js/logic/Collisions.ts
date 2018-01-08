@@ -8,7 +8,6 @@ import { Utils } from "./Utils";
 
 import * as _ from "ramda";
 
-
 export const checkAllCollisions = (players: Player[]): Player[] => {
   const combinations = this.getAllPlayerCombinations(players);
 

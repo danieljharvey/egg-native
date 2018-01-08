@@ -35,9 +35,12 @@
     ]
   },
   "dependencies": {
+    "@types/form-data": "^2.2.1",
     "@types/jest": "^22.0.1",
     "@types/node": "^8.5.7",
+    "@types/webaudioapi": "^0.0.27",
     "immutable": "^3.8.2",
+    "prettier": "^1.9.2",
     "ramda": "^0.25.0",
     "ramda-ts": "^0.1.2",
     "react": "16.0.0-beta.5",

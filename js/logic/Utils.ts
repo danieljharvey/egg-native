@@ -25,31 +25,6 @@ export class Utils {
     return keys[(keys.length * Math.random()) << 0];
   }
 
-  public static getControlStyle(id: string, property: string) {
-    const controlHeader = document.getElementById(id);
-    if (!controlHeader) {
-      return 0;
-    }
-    const style = window.getComputedStyle(controlHeader);
-    const value = style[property];
-    if (isNaN(value)) {
-      return parseInt(value, 10);
-    }
-    return value;
-  }
-
-  public static getControlProperty(id: string, property: string) {
-    const controlHeader = document.getElementById(id);
-    if (!controlHeader) {
-      return 0;
-    }
-    const value = controlHeader[property];
-    if (isNaN(value)) {
-      return parseInt(value, 10);
-    }
-    return value;
-  }
-
   public static removeParams(params: object, removeList: string[]) {
     const goodParams = {};
     for (const i in params) {

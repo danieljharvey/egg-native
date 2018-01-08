@@ -10,9 +10,9 @@ import { BoardSize } from "../objects/BoardSize";
 import { GameState } from "../objects/GameState";
 import { Player } from "../objects/Player";
 
-import { Action } from "./Action";
+import * as Action from "./Action";
 import * as BoardCollisions from "./BoardCollisions";
-import { Collisions } from "./Collisions";
+import * as Collisions from "./Collisions";
 import * as Map from "./Map";
 import * as Movement from "./Movement";
 import { playerTypes } from "./PlayerTypes";
@@ -42,11 +42,9 @@ const doGameMove = (gameState: GameState, timePassed: number): GameState => {
 
   const newGameState = Movement.doCalcs(startGameState, timePassed);
 
-  const action = new Action();
-  const newerGameState = action.checkAllPlayerTileActions(newGameState);
+  const newerGameState = Action.checkAllPlayerTileActions(newGameState);
 
-  const collisions = new Collisions(playerTypes);
-  const sortedPlayers = collisions.checkAllCollisions(newerGameState.players);
+  const sortedPlayers = Collisions.checkAllCollisions(newerGameState.players);
 
   const splitPlayers = BoardCollisions.checkBoardCollisions(
     newerGameState.board,

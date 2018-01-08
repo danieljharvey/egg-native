@@ -45,13 +45,21 @@ test("Returns a valid map point", function() {
 });
 
 test("Finds a previously used point", function() {
-  const map = [[false, false, false], [false, true, false], [false, false, false]];
+  const map = [
+    [false, false, false],
+    [false, true, false],
+    [false, false, false]
+  ];
 
   const list = [new Coords({ x: 1, y: 0 }), new Coords({ x: 0, y: 0 })];
 
   const point = new Coords({ x: 0, y: 0 });
 
-  const expected = [new Coords({ x: 0, y: 0 }), new Coords({ x: 1, y: 0 }), new Coords({ x: 0, y: 0 })];
+  const expected = [
+    new Coords({ x: 0, y: 0 }),
+    new Coords({ x: 1, y: 0 }),
+    new Coords({ x: 0, y: 0 })
+  ];
 
   const actual = path.addAdjacent(map)(list)(point);
 
@@ -59,7 +67,11 @@ test("Finds a previously used point", function() {
 });
 
 test("Finds an unavailable point", function() {
-  const map = [[false, true, false], [false, true, false], [false, false, false]];
+  const map = [
+    [false, true, false],
+    [false, true, false],
+    [false, false, false]
+  ];
 
   const list = [new Coords({ x: 0, y: 0 })];
 
@@ -73,7 +85,11 @@ test("Finds an unavailable point", function() {
 });
 
 test("Gets rid of those duplicates", function() {
-  const list = [new Coords({ x: 0, y: 1 }), new Coords({ x: 0, y: 0 }), new Coords({ x: 0, y: 1 })];
+  const list = [
+    new Coords({ x: 0, y: 1 }),
+    new Coords({ x: 0, y: 0 }),
+    new Coords({ x: 0, y: 1 })
+  ];
 
   const expected = false;
 
@@ -83,7 +99,11 @@ test("Gets rid of those duplicates", function() {
 });
 
 test("Leaves those non-duplicates", function() {
-  const list = [new Coords({ x: 0, y: 1 }), new Coords({ x: 0, y: 0 }), new Coords({ x: 0, y: 2 })];
+  const list = [
+    new Coords({ x: 0, y: 1 }),
+    new Coords({ x: 0, y: 0 }),
+    new Coords({ x: 0, y: 2 })
+  ];
 
   const expected = true;
 
@@ -109,7 +129,11 @@ test("Adds to small list", function() {
 
   const point = new Coords({ x: 1, y: 1 });
 
-  const expected = [new Coords({ x: 1, y: 1 }), new Coords({ x: 1, y: 0 }), new Coords({ x: 0, y: 0 })];
+  const expected = [
+    new Coords({ x: 1, y: 1 }),
+    new Coords({ x: 1, y: 0 }),
+    new Coords({ x: 0, y: 0 })
+  ];
 
   const actual = path.addToList(list, point);
 
@@ -220,7 +244,10 @@ it("Finds one", function() {
     [new Coords({ x: 2, y: 2 }), new Coords({ x: 3, y: 4 })]
   ];
 
-  const expected = Maybe.just([new Coords({ x: 2, y: 2 }), new Coords({ x: 3, y: 4 })]);
+  const expected = Maybe.just([
+    new Coords({ x: 2, y: 2 }),
+    new Coords({ x: 3, y: 4 })
+  ]);
 
   const actual = path.findAnswerInList(target)(list);
 
@@ -316,7 +343,12 @@ it("Wins I suppose", function() {
 });
 
 it("Wins another map", function() {
-  const map = [[false, false, false, true], [true, true, false, true], [false, false, false, true], [true, true, true, true]];
+  const map = [
+    [false, false, false, true],
+    [true, true, false, true],
+    [false, false, false, true],
+    [true, true, true, true]
+  ];
 
   const start = new Coords({ x: 2, y: 0 });
 
@@ -712,7 +744,7 @@ it("Deals with stuff from actual game", function() {
     ]
   ];
   const start = new Coords({ x: 0, y: 12, offsetX: 0, offsetY: 0 });
-  
+
   const targets = fromJS([
     new Coords({ x: 0, y: 12, offsetX: 0, offsetY: 0 }),
     new Coords({ x: 7, y: 0, offsetX: 0, offsetY: 0 })
@@ -722,7 +754,7 @@ it("Deals with stuff from actual game", function() {
 
   const value = actual.caseOf({
     just: val => val,
-    nothing: () => false
+    nothing: () => []
   });
 
   expect(value.length).toEqual(11);
@@ -1030,7 +1062,7 @@ it("Uses a really big map and doesn't timeout", function(done) {
     just: val => {
       return val;
     },
-    nothing: () => false
+    nothing: () => []
   });
 
   expect(value.length).toEqual(12);
@@ -1517,8 +1549,8 @@ it("Sorts the stupid map", function() {
     just: val => {
       return val;
     },
-    nothing: () => false
+    nothing: () => []
   });
 
-  expect(value).toEqual(false);
+  expect(value).toEqual([]);
 });

@@ -1,6 +1,7 @@
 import { Board } from "../../objects/Board";
 import { BoardSize } from "../../objects/BoardSize";
 import { Coords } from "../../objects/Coords";
+import { Tile } from "../../objects/Tile";
 import * as Map from "../Map";
 import { TileSet } from "../TileSet";
 
@@ -97,7 +98,10 @@ test("Correct non-existant empty board to reasonably full one", () => {
 });
 
 test("Make board from array", () => {
-  const boardArray = [[{ id: 1 }, { id: 2 }], [{ id: 2 }, { id: 1 }]];
+  const boardArray = [
+    [new Tile({ id: 1 }), new Tile({ id: 2 })],
+    [new Tile({ id: 2 }), new Tile({ id: 1 })]
+  ];
 
   const boardSize = new BoardSize(5);
 

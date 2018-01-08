@@ -73,19 +73,6 @@ export class Jetpack {
     return player;
   }
 
-  protected getTitleScreen(callback) {
-    const imageSize = { width: 1024, height: 1024 };
-    const imagePath = "large/the-egg.png";
-    const titleScreen = new TitleScreen(
-      this,
-      this.canvas,
-      imagePath,
-      imageSize.width,
-      imageSize.height
-    );
-    titleScreen.render(callback);
-  }
-
   protected getLevelList(callback) {
     this.levels.getLevelList(levelList => {
       this.levelList = levelList;
@@ -106,7 +93,6 @@ export class Jetpack {
     const levelID = availableLevels[chosenKey].levelID;
     return levelID;
   }
-
 
   protected getBoardFromArray(boardArray): Board {
     return Map.makeBoardFromArray(boardArray);

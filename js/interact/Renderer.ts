@@ -71,27 +71,6 @@ export class Renderer {
     this.renderFrontLayerBoard(board, renderMap, renderAngle);
   }
 
-  public drawRotatingBoard(
-    clockwise: boolean,
-    moveSpeed: number,
-    completed: () => void
-  ) {
-    if (this.rotating === true) {
-      // already
-      return false;
-    }
-
-    const canvas = this.canvas.getCanvas();
-    const savedData = this.getImageData();
-    this.rotating = true;
-
-    if (clockwise) {
-      this.drawRotated(savedData, 1, 0, 90, moveSpeed, completed);
-    } else {
-      this.drawRotated(savedData, -1, 0, -90, moveSpeed, completed);
-    }
-  }
-
   public getImageData(): Promise<Image> {
     return new Promise((resolve, reject) => {
       const canvas = this.canvas.getCanvas();
@@ -431,41 +410,4 @@ export class Renderer {
     }
   }
 
-  protected drawRotated(
-    savedData: HTMLImageElement,
-    direction: number,
-    angle: number,
-    targetAngle: number,
-    moveSpeed: number,
-    completed: () => any
-  ) {
-    if (direction > 0) {
-      if (angle >= targetAngle) {
-        completed();
-        this.rotating = false;
-        return false;
-      }
-    } else {
-      if (angle <= targetAngle) {
-        completed();
-        this.rotating = false;
-        return false;
-      }
-    }
-
-    this.drawRotatedImage(savedData, angle);
-
-    angle += direction * (moveSpeed / 2);
-
-    this.animationHandle = window.requestAnimationFrame(() => {
-      this.drawRotated(
-        savedData,
-        direction,
-        angle,
-        targetAngle,
-        moveSpeed,
-        completed
-      );
-    });
-  }
 }

@@ -1,0 +1,1 @@
+interface RNCanvasElement extends HTMLCanvasElement {}

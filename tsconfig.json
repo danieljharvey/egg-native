@@ -5,6 +5,7 @@
 		"noEmit": true,
 		"moduleResolution": "node",
 		"lib": [
+			"dom",
 			"es7",
 			"es2015",
 			"es2016"

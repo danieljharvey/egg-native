@@ -92,7 +92,7 @@ export class Renderer {
     }
   }
 
-  protected getImageData(canvas: HTMLCanvasElement): HTMLImageElement {
+  protected getImageData(canvas: RNCanvasElement): HTMLImageElement {
     const cw = canvas.width;
     const ch = canvas.height;
 

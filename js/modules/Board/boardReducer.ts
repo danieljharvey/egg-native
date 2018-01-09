@@ -48,6 +48,7 @@ const board = (state: IBoardState = initialState, action) => {
   switch (action.type) {
     case UPDATE_LEVEL_DATA:
       return initialBoard(state, action.levelData);
+
     case DO_GAME_MOVE:
       if (state.paused === true) {
         return state;

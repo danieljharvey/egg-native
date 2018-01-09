@@ -5,7 +5,6 @@ import { Coords } from "../objects/Coords";
 import { GameState } from "../objects/GameState";
 import { Player } from "../objects/Player";
 
-import { Jetpack } from "../interact/Jetpack";
 import { Renderer } from "../interact/Renderer";
 
 import * as Map from "./Map";

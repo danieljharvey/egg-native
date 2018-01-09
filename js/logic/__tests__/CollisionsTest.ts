@@ -1,24 +1,15 @@
 import { Coords } from "../../objects/Coords";
 import { Player } from "../../objects/Player";
-import { Collisions } from "../Collisions";
+import * as Collisions from "../Collisions";
+
+import { playerTypes } from "../PlayerTypes"
 
 import { fromJS, List } from "immutable";
-
-const playerTypes = {
-  horse: {
-    value: 1
-  },
-  ultimateHorse: {
-    value: 2
-  }
-};
 
 test("Ignores same player collision test", () => {
   const player1 = new Player();
 
-  const collisions = new Collisions(playerTypes);
-
-  const result = collisions.checkCollision(player1, player1);
+  const result = Collisions.checkCollision(player1, player1);
   expect(result).toEqual(false);
 });
 
@@ -37,9 +28,7 @@ test("Vertical collision works", () => {
     type: "Horse"
   });
 
-  const collisions = new Collisions(playerTypes);
-
-  const result = collisions.checkCollision(player1, player2);
+  const result = Collisions.checkCollision(player1, player2);
   expect(result).toEqual(true);
 });
 
@@ -59,9 +48,7 @@ test("Too far for horizontal collision", () => {
 
   // difference of 30
 
-  const collisions = new Collisions(playerTypes);
-
-  const result = collisions.checkCollision(player1, player2);
+  const result = Collisions.checkCollision(player1, player2);
   expect(result).toEqual(false);
 });
 
@@ -81,9 +68,7 @@ test("Close enough for RHS horizontal collision", () => {
 
   // difference of 18
 
-  const collisions = new Collisions(playerTypes);
-
-  const result = collisions.checkCollision(player1, player2);
+  const result = Collisions.checkCollision(player1, player2);
   expect(result).toEqual(true);
 });
 
@@ -104,9 +89,7 @@ test("Close enough for LHS horizontal collision", () => {
 
   // difference of 19
 
-  const collisions = new Collisions(playerTypes);
-
-  const result = collisions.checkCollision(player1, player2);
+  const result = Collisions.checkCollision(player1, player2);
   expect(result).toEqual(true);
 });
 
@@ -117,9 +100,7 @@ test("Ignores collision with zero-value player", () => {
 
   const zeroValuePlayer = player1.modify({ value: 0, id: 100 });
 
-  const collisions = new Collisions(playerTypes);
-
-  const result = collisions.checkCollision(player1, zeroValuePlayer);
+  const result = Collisions.checkCollision(player1, zeroValuePlayer);
   expect(result).toEqual(false);
 });
 
@@ -131,9 +112,7 @@ test("Ignores collision with just-split player", () => {
 
   const splitPlayer = player1.modify({ id: 100 });
 
-  const collisions = new Collisions(playerTypes);
-
-  const result = collisions.checkCollision(player1, splitPlayer);
+  const result = Collisions.checkCollision(player1, splitPlayer);
   expect(result).toEqual(false);
 });
 
@@ -150,19 +129,17 @@ test("Removes correct players", () => {
 
   const expected = [player1];
 
-  const collisions = new Collisions(playerTypes);
-
   const collided = [[2, 3], [4, 5]];
 
-  const actual = collisions.removeCollidedPlayers(collided, players);
+  const actual = Collisions.removeCollidedPlayers(collided, players);
 
   expect(actual).toEqual(expected);
 });
 
-test("Create new players", () => {
+test("Combine two players", () => {
   const player1 = new Player({
     id: 1,
-    value: 10,
+    value: 1,
     coords: new Coords({
       x: 100,
       y: 100
@@ -171,33 +148,21 @@ test("Create new players", () => {
 
   const player2 = new Player({
     id: 2,
-    value: 5,
+    value: 1,
     coords: new Coords({
       x: 6,
       y: 6
     })
   });
 
-  const types = {
-    madeUp: {
-      frames: 18,
-      img: "egg-sprite.png",
-      multiplier: 1,
-      title: "It is of course the egg",
-      type: "madeUp",
-      value: 15
-    }
-  };
+  const redEgg = playerTypes['red-egg']
 
   const expected = [
     new Player({
+      ...redEgg,
       id: 1,
-      frames: 18,
-      img: "egg-sprite.png",
-      multiplier: 1,
-      title: "It is of course the egg",
-      type: "madeUp",
-      value: 15,
+      value: 2,
+      
       coords: new Coords({
         x: 100,
         y: 100
@@ -205,9 +170,7 @@ test("Create new players", () => {
     })
   ];
 
-  const collisions = new Collisions(types);
-
-  const actual = collisions.combinePlayers(player1, player2);
+  const actual = Collisions.combinePlayers(player1, player2);
 
   expect(actual).toEqual(expected);
 });
@@ -235,9 +198,7 @@ test("Create no new players as no type found", () => {
 
   const expected = [player1, player2];
 
-  const collisions = new Collisions(types);
-
-  const actual = collisions.combinePlayers(player1, player2);
+  const actual = Collisions.combinePlayers(player1, player2);
 
   expect(actual).toEqual(expected);
 });
@@ -253,9 +214,7 @@ test("Find collisions", () => {
 
   const expected = [[1, 2]];
 
-  const collisions = new Collisions(playerTypes);
-
-  const actual = collisions.findCollisions(combinations, players);
+  const actual = Collisions.findCollisions(combinations, players);
 
   expect(actual).toEqual(expected);
 });
@@ -269,9 +228,7 @@ test("Fetch player by ID", () => {
 
   const expected = new Player({ id: 2 });
 
-  const collisions = new Collisions(playerTypes);
-
-  const actual = collisions.fetchPlayerByID(players, 2);
+  const actual = Collisions.fetchPlayerByID(players, 2);
 
   expect(actual).toEqual(expected);
 });
@@ -285,9 +242,7 @@ test("Fetch player by ID Immutable", () => {
 
   const expected = new Player({ id: 2 });
 
-  const collisions = new Collisions(playerTypes);
-
-  const actual = collisions.fetchPlayerByID(players, 2);
+  const actual = Collisions.fetchPlayerByID(players, 2);
 
   expect(actual).toEqual(expected);
 });
@@ -301,9 +256,7 @@ test("Get all player combinations", () => {
 
   const expected = [[1, 4], [1, 2], [2, 4]];
 
-  const collisions = new Collisions(playerTypes);
-
-  const actual = collisions.getAllPlayerCombinations(players);
+  const actual = Collisions.getAllPlayerCombinations(players);
 
   expect(actual).toEqual(expected);
 });
@@ -319,9 +272,7 @@ test("Get all player combinations from Immutable List", () => {
 
   const expected = [[1, 4], [1, 2], [2, 4]];
 
-  const collisions = new Collisions(playerTypes);
-
-  const actual = collisions.getAllPlayerCombinations(players);
+  const actual = Collisions.getAllPlayerCombinations(players);
 
   expect(actual).toEqual(expected);
 });
@@ -333,11 +284,9 @@ test("Clean combos of immutable", () => {
 
   const expected = [2, 4];
 
-  const collisions = new Collisions(playerTypes);
+  const actual1 = Collisions.cleanCombos(plop1);
 
-  const actual1 = collisions.cleanCombos(plop1);
-
-  const actual2 = collisions.cleanCombos(plop2);
+  const actual2 = Collisions.cleanCombos(plop2);
 
   expect(actual1).toEqual(expected);
   expect(actual2).toEqual(expected);
@@ -346,7 +295,7 @@ test("Clean combos of immutable", () => {
 test("Create new players actually works", () => {
   const player1 = new Player({
     id: 1,
-    value: 10,
+    value: 1,
     coords: new Coords({
       x: 100,
       y: 100
@@ -355,7 +304,7 @@ test("Create new players actually works", () => {
 
   const player2 = new Player({
     id: 2,
-    value: 5,
+    value: 1,
     coords: new Coords({
       x: 6,
       y: 6
@@ -366,31 +315,17 @@ test("Create new players actually works", () => {
     id: 3,
     value: 5,
     coords: new Coords({
-      x: 100,
-      y: 100
+      x: 102,
+      y: 102
     })
   });
 
-  const types = {
-    madeUp: {
-      frames: 18,
-      img: "egg-sprite.png",
-      multiplier: 1,
-      title: "It is of course the egg",
-      type: "madeUp",
-      value: 15
-    }
-  };
+  const redEgg = playerTypes['red-egg']
 
   const expected = [
     new Player({
+      ...redEgg,
       id: 1,
-      frames: 18,
-      img: "egg-sprite.png",
-      multiplier: 1,
-      title: "It is of course the egg",
-      type: "madeUp",
-      value: 15,
       coords: new Coords({
         x: 100,
         y: 100
@@ -402,9 +337,7 @@ test("Create new players actually works", () => {
 
   const collided = [[1, 2], [4, 6]];
 
-  const collisions = new Collisions(types);
-
-  const actual = collisions.createNewPlayers(collided, players);
+  const actual = Collisions.createNewPlayers(collided, players);
 
   expect(actual).toEqual(expected);
 });
@@ -443,9 +376,7 @@ test("Combine player lists", () => {
 
   const expected = fromJS([player1, player2, player3]);
 
-  const collisions = new Collisions(playerTypes);
-
-  const actual = collisions.combinePlayerLists(list1, list2);
+  const actual = Collisions.combinePlayerLists(list1, list2);
 
   expect(actual).toEqual(expected);
 });

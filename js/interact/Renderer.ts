@@ -92,7 +92,7 @@ export class Renderer {
     }
   }
 
-  protected getImageData(canvas: HTMLCanvasElement): HTMLImageElement {
+  protected getImageData(canvas: RNCanvasElement): HTMLImageElement {
     const cw = canvas.width;
     const ch = canvas.height;
 
@@ -317,10 +317,10 @@ export class Renderer {
 
     const left = Math.floor(coords.x * tileSize + coords.offsetX * offsetRatio);
     const top = Math.floor(coords.y * tileSize + coords.offsetY * offsetRatio);
-    
+
     const clipLeft = Math.floor(player.currentFrame * SPRITE_SIZE);
     const clipTop = 0;
-    
+
     const image = this.getPlayerImage(player.img);
     if (!image) {
       // console.log('player image not loaded', player.img);

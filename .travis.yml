@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+  - "7"
+  - "8"
+  - "node"
+
+sudo: false
+cache:
+  directories:
+    - $HOME/.yarn-cache
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+env:
+  - NODE_ENV='test'
+script:
+  - npm install
+  - npm run tsc
+  - npm run test:ci

@@ -1,10 +1,12 @@
-import { Board } from "../Board";
-import { BoardSize } from "../BoardSize";
-import { Coords } from "../Coords";
+import { Board } from "../../objects/Board";
+import { BoardSize } from "../../objects/BoardSize";
+import { Coords } from "../../objects/Coords";
 import * as Map from "../Map";
-import { Player } from "../Player";
+
+import { Player } from "../../objects/Player";
 import { RenderMap } from "../RenderMap";
-import { TileSet } from "../TileSet";
+
+import { TileSet } from "../../logic/TileSet";
 
 test("Create render map from board changes", () => {
   const tile1 = Map.cloneTile(1);

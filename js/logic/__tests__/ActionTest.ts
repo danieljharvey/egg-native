@@ -1,10 +1,14 @@
-import { Action } from "../Action";
-import { Board } from "../Board";
-import { BoardSize } from "../BoardSize";
-import { Coords } from "../Coords";
+import * as Action from "../Action";
+
+import { Board } from "../../objects/Board";
+import { BoardSize } from "../../objects/BoardSize";
+import { Coords } from "../../objects/Coords";
+
 import * as Map from "../Map";
-import { Player } from "../Player";
-import { Tile } from "../Tile";
+
+import { Player } from "../../objects/Player";
+import { Tile } from "../../objects/Tile";
+
 import { TileSet } from "../TileSet";
 
 import { is } from "immutable"; // comparison func
@@ -33,9 +37,7 @@ test("Do nothing if player not centered on board in X axis", () => {
     })
   });
 
-  const action = new Action();
-
-  const output = action.checkPlayerTileAction(player, board, 0, "");
+  const output = Action.checkPlayerTileAction(player, board, 0, "");
 
   expect(is(output.board, board)).toEqual(true);
 });
@@ -51,9 +53,7 @@ test("Do nothing if player not centered on board in Y axis", () => {
     })
   });
 
-  const action = new Action();
-
-  const output = action.checkPlayerTileAction(player, board, 0, "");
+  const output = Action.checkPlayerTileAction(player, board, 0, "");
 
   expect(is(output.board, board)).toEqual(true);
 });
@@ -69,9 +69,7 @@ test("Do nothing if player has not moved", () => {
     moved: false
   });
 
-  const action = new Action();
-
-  const output = action.checkPlayerTileAction(player, board, 0, "");
+  const output = Action.checkPlayerTileAction(player, board, 0, "");
 
   expect(is(output.board, board)).toEqual(true);
 });
@@ -87,9 +85,7 @@ test("Change board if player has moved", () => {
     moved: true
   });
 
-  const action = new Action();
-
-  const output = action.checkPlayerTileAction(player, board, 0, "");
+  const output = Action.checkPlayerTileAction(player, board, 0, "");
 
   expect(is(output.board, board)).toEqual(false);
   expect(output.score).toEqual(100); // tile was collected

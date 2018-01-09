@@ -1,8 +1,10 @@
-import { Board } from "../Board";
-import { Coords } from "../Coords";
-import { Jetpack } from "../Jetpack";
-import { Player } from "../Player";
-import { Tile } from "../Tile";
+import { Board } from "../../objects/Board";
+import { Coords } from "../../objects/Coords";
+import { Player } from "../../objects/Player";
+import { Tile } from "../../objects/Tile";
+
+import * as Bootstrap from "../Bootstrap";
+import { playerTypes } from "../PlayerTypes";
 
 // create a board with 4 tiles, one of which will create a player
 const createPlayerBoard = () => {
@@ -21,7 +23,7 @@ const createPlayerBoard = () => {
   });
 
   const createPlayerTile = new Tile({
-    createPlayer: "dog",
+    createPlayer: "egg",
     x: 1,
     y: 1
   });
@@ -34,27 +36,14 @@ const createPlayerBoard = () => {
   return new Board(array);
 };
 
-const getPlayerTypes = () => {
-  return {
-    dog: {
-      type: "dog",
-      value: 2
-    }
-  };
-};
-
 test("Create new player", () => {
-  const playerTypes = getPlayerTypes();
-
   const coords = new Coords({ x: 1, y: 1 });
 
-  const type = "dog";
+  const type = "egg";
 
-  const direction = 1;
+  const direction = new Coords({ x: 1 });
 
-  const jetpack = new Jetpack();
-
-  const player = jetpack.createNewPlayer(playerTypes, type, coords, direction);
+  const player = Bootstrap.createNewPlayer(type, coords, direction);
 
   expect(typeof player).toEqual("object");
   expect(player.coords).toEqual(coords);
@@ -66,33 +55,24 @@ test("Filter create tiles", () => {
 
   const tiles = board.getAllTiles();
 
-  const jetpack = new Jetpack();
-
-  const filtered = jetpack.filterCreateTiles(tiles);
+  const filtered = Bootstrap.filterCreateTiles(tiles);
 
   expect(filtered.size).toEqual(1);
 });
 
 test("Create multiple new players", () => {
-  const playerTypes = getPlayerTypes();
-
   const board = createPlayerBoard();
 
-  const jetpack = new Jetpack();
-  jetpack.nextPlayerID = 3;
-  jetpack.moveSpeed = 10;
-
   const expected = new Player({
+    ...playerTypes.egg,
     coords: new Coords({ x: 1, y: 1 }),
     direction: new Coords({ x: 1 }),
-    id: 3,
-    type: "dog",
-    value: 2,
+    id: NaN,
     moveSpeed: 10,
     fallSpeed: 12
   });
 
-  const players = jetpack.createPlayers(playerTypes, board);
+  const players = Bootstrap.createPlayers(board);
 
   expect(typeof players).toEqual("object");
   expect(players.first()).toEqual(expected);

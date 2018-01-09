@@ -1,5 +1,4 @@
 import { fromJS, List } from "immutable";
-import { PlayerTypes } from "./PlayerTypes";
 
 import { Board } from "../objects/Board";
 import { Coords } from "../objects/Coords";

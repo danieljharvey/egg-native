@@ -3,9 +3,16 @@
 		"target": "es2015",
 		"jsx": "react-native",
 		"noEmit": true,
-		"moduleResolution": "node"
+		"moduleResolution": "node",
+		"lib": [
+			"dom",
+			"es7",
+			"es2015",
+			"es2016"
+		],
+		"skipLibCheck": true
 	},
-	 "exclude": [
+	"exclude": [
 		"node_modules"
 	]
 }

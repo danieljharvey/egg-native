@@ -1,9 +1,9 @@
 import * as _ from "ramda";
-import { Board } from "./Board";
-import { BoardSize } from "./BoardSize";
-import { Coords } from "./Coords";
-import { GameState } from "./GameState";
-import { Player } from "./Player";
+import { Board } from "../objects/Board";
+import { BoardSize } from "../objects/BoardSize";
+import { Coords } from "../objects/Coords";
+import { GameState } from "../objects/GameState";
+import { Player } from "../objects/Player";
 
 // wee lad full of reusable functions
 
@@ -23,31 +23,6 @@ export class Utils {
       return false;
     }
     return keys[(keys.length * Math.random()) << 0];
-  }
-
-  public static getControlStyle(id: string, property: string) {
-    const controlHeader = document.getElementById(id);
-    if (!controlHeader) {
-      return 0;
-    }
-    const style = window.getComputedStyle(controlHeader);
-    const value = style[property];
-    if (isNaN(value)) {
-      return parseInt(value, 10);
-    }
-    return value;
-  }
-
-  public static getControlProperty(id: string, property: string) {
-    const controlHeader = document.getElementById(id);
-    if (!controlHeader) {
-      return 0;
-    }
-    const value = controlHeader[property];
-    if (isNaN(value)) {
-      return parseInt(value, 10);
-    }
-    return value;
   }
 
   public static removeParams(params: object, removeList: string[]) {

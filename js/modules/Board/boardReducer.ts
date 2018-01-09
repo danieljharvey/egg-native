@@ -63,12 +63,14 @@ const turnLeft = (state: IBoardState, action, timePassed: number) => {
 
   if (drawAngle < -90) {
     // done
+
     return {
       ...state,
       drawAngle: 0,
       nextAction: "",
       lastTime: action.newTime,
-      gameState: doRotate(state.gameState, false)
+      gameState: doRotate(state.gameState, false),
+      imageData: null
     };
   }
   return {

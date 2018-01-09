@@ -65,7 +65,8 @@ export default class BoardComponent extends React.Component<IBoardProps> {
         this.props.imageData,
         this.props.drawAngle
       );
-    } else {
+    } else if (nextProps.nextAction !== "rotateLeft") {
+      // stop drawing when no change
       EventLoop.renderChanges(this.props.renderer, oldGameState, newGameState);
     }
     return (

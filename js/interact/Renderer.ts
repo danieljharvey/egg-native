@@ -73,18 +73,31 @@ export class Renderer {
 
   public getImageData(): Promise<Image> {
     return new Promise((resolve, reject) => {
-      const canvas = this.canvas.getCanvas();
+      // console.log("Renderer->getImageData");
+      const t0 = Date.now();
 
+      const canvas = this.canvas.getCanvas();
       const size = canvas.width;
+
+      const ctx = this.canvas.getDrawingContext();
       // console.log("canvas size", canvas.width, canvas.height);
 
       const savedData: RNImage = new Image(canvas, size, size);
       const dataURL = canvas.toDataURL("image/png");
       dataURL.then(data => {
+        const t2 = Date.now();
+        console.log("Call to toDataURL took " + (t2 - t0) + " milliseconds.");
         savedData.src = Utils.sanitisePath(data);
       });
 
       savedData.addEventListener("load", () => {
+        console.log(
+          "Renderer->getImageData done",
+          savedData.width,
+          savedData.height
+        );
+        const t1 = Date.now();
+        console.log("Whole export took " + (t1 - t0) + " milliseconds.");
         resolve(savedData);
       });
     });
@@ -409,5 +422,4 @@ export class Renderer {
       );
     }
   }
-
 }

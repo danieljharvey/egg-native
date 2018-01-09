@@ -9,7 +9,6 @@ export default class Canvas {
 
   constructor(canvas: RNCanvasElement, width, height) {
     this.canvas = canvas;
-    this.ctx = canvas.getContext("2d");
     this.width = width;
     this.height = height;
     this.sizeCanvas(width, height);
@@ -22,7 +21,7 @@ export default class Canvas {
   }
 
   public getDrawingContext() {
-    return this.ctx;
+    return this.canvas.getContext("2d");
   }
 
   public getCanvas() {
@@ -30,8 +29,9 @@ export default class Canvas {
   }
 
   public wipeCanvas(fillStyle: string): void {
-    this.ctx.fillStyle = fillStyle;
-    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    const ctx = this.getDrawingContext();
+    ctx.fillStyle = fillStyle;
+    ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
   public calcTileSize(boardSize) {

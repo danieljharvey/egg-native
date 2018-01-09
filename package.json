@@ -29,7 +29,11 @@
       ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
-    "moduleFileExtensions": ["ts", "tsx", "js"]
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
   },
   "dependencies": {
     "@types/form-data": "^2.2.1",
@@ -38,6 +42,7 @@
     "@types/webaudioapi": "^0.0.27",
     "eslint": "^4.15.0",
     "immutable": "^3.8.2",
+    "object.entries": "^1.0.4",
     "prettier": "^1.9.2",
     "ramda": "^0.25.0",
     "ramda-ts": "^0.1.2",

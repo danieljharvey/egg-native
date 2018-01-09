@@ -60,11 +60,13 @@ export const rotateLeft = () => {
     // now grab from canvas
     const state = getState();
 
-    const imageData = state.canvas.getImageData();
-    dispatch(storeImageData(imageData));
-    // now start the turning part
+    state.board.renderer.getImageData().then(imageData => {
+      console.log("captured image data", imageData);
+      dispatch(storeImageData(imageData));
+      // now start the turning part
 
-    dispatch(readyToTurnLeft());
+      dispatch(readyToTurnLeft());
+    });
   };
 };
 

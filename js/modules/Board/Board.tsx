@@ -6,7 +6,6 @@ import GestureRecognizer, {
   swipeDirections
 } from "react-native-swipe-gestures";
 
-import CanvasClass from "../../interact/Canvas";
 import { Renderer } from "../../interact/Renderer";
 import { playerTypes } from "../../logic/PlayerTypes";
 
@@ -21,40 +20,35 @@ import { fromJS } from "immutable";
 import * as EventLoop from "../../logic/EventLoop";
 import { GameState } from "../../objects/GameState";
 
+import { renderChanges } from "../../logic/EventLoop";
+
 interface IBoardProps {
   levelData: {};
   gameState: GameState;
   paused: boolean;
+  renderer: Renderer;
+  imageData: Image;
+  drawAngle: number;
+  nextAction: string;
+
   rotateLeft: () => any;
   rotateRight: () => any;
-  doGameMove: ((newTime: number) => any);
-  canvas: CanvasClass;
+  doGameMove: (newTime: number) => any;
   togglePause: () => any;
+  updateRenderer: (renderer: Renderer) => any;
 }
 
-interface IBoardState {
-  renderer: any;
-}
-
-export default class BoardComponent extends React.Component<
-  IBoardProps,
-  IBoardState
-> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      renderer: null
-    };
-  }
+export default class BoardComponent extends React.Component<IBoardProps> {
   public handleCanvas = canvas => {
     EventLoop.handleCanvas(canvas, this.props.levelData, renderer => {
-      this.setState({ renderer });
+      this.props.updateRenderer(renderer);
       this.eventLoop(10);
     });
   };
 
   public eventLoop = newTime => {
-    const anim = window.requestAnimationFrame(this.eventLoop);
+    //const anim = window.requestAnimationFrame(this.eventLoop);
+    const anim = setTimeout(this.eventLoop, 500);
     this.props.doGameMove(newTime);
   };
 
@@ -68,7 +62,16 @@ export default class BoardComponent extends React.Component<
     if (!oldGameState || !newGameState) {
       return false;
     }
-    EventLoop.renderChanges(this.state.renderer, oldGameState, newGameState);
+
+    if (nextProps.nextAction === "turnLeft") {
+      EventLoop.renderRotation(
+        this.props.renderer,
+        this.props.imageData,
+        this.props.drawAngle
+      );
+    } else {
+      EventLoop.renderChanges(this.props.renderer, oldGameState, newGameState);
+    }
     return false;
   }
 
@@ -87,6 +90,9 @@ export default class BoardComponent extends React.Component<
             ref={this.handleCanvas}
           />
         </View>
+        <TouchableHighlight onPress={() => this.props.rotateLeft()}>
+          <Text>Turn left</Text>
+        </TouchableHighlight>
         <TouchableHighlight onPress={() => this.props.togglePause()}>
           <Text>{pauseText}</Text>
         </TouchableHighlight>

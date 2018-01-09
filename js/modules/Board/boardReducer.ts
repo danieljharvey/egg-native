@@ -5,10 +5,11 @@ import {
   START_ROTATE_LEFT,
   TOGGLE_PAUSE,
   UPDATE_LEVEL_DATA,
-  UPDATE_RENDERER
+  UPDATE_RENDERER,
+  STORE_IMAGE_DATA
 } from "./boardActions";
 
-import Canvas from "../../interact/Canvas";
+import { Renderer } from "../../interact/Renderer";
 import { GameState } from "../../objects/GameState";
 
 import * as savedLevelData from "../../assets/levels/1.json";
@@ -22,7 +23,7 @@ import {
 interface IBoardState {
   levelData: {};
   gameState: GameState | null;
-  canvas: Canvas;
+  renderer: Renderer;
   nextAction: string;
   paused: boolean;
   lastTime: number;
@@ -33,7 +34,7 @@ interface IBoardState {
 export const initialState: IBoardState = {
   levelData: savedLevelData,
   gameState: null,
-  canvas: null,
+  renderer: null,
   nextAction: "",
   paused: false,
   lastTime: 0,
@@ -116,10 +117,16 @@ const board = (state: IBoardState = initialState, action) => {
         nextAction: newGameState.outcome,
         lastTime: action.newTime
       };
+
     case UPDATE_RENDERER:
       return {
         ...state,
         renderer: action.renderer
+      };
+    case STORE_IMAGE_DATA:
+      return {
+        ...state,
+        imageData: action.imageData
       };
     case START_ROTATE_LEFT:
       return {
@@ -128,6 +135,7 @@ const board = (state: IBoardState = initialState, action) => {
         imageData: null,
         drawAngle: 0
       };
+
     case READY_TO_TURN_LEFT:
       return {
         ...state,

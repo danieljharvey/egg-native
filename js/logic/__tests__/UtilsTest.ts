@@ -53,3 +53,13 @@ test("Get player by value", () => {
 
   expect(actual).toEqual(expected);
 });
+
+test("Sanitise path", () => {
+  const broken = '"blah bahaagdfa"';
+
+  const expected = "blah bahaagdfa";
+
+  const actual = Utils.sanitisePath(broken);
+
+  expect(actual).toEqual(expected);
+});

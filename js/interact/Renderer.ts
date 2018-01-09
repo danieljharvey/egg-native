@@ -82,7 +82,7 @@ export class Renderer {
     }
 
     const canvas = this.canvas.getCanvas();
-    const savedData = this.canvas.getImageData();
+    const savedData = this.getImageData();
     this.rotating = true;
 
     if (clockwise) {
@@ -90,6 +90,46 @@ export class Renderer {
     } else {
       this.drawRotated(savedData, -1, 0, -90, moveSpeed, completed);
     }
+  }
+
+  public getImageData(): Promise<Image> {
+    return new Promise((resolve, reject) => {
+      const canvas = this.canvas.getCanvas();
+
+      const savedData: RNImage = new Image(canvas, canvas.width, canvas.height);
+      const dataURL = canvas.toDataURL("image/png");
+      dataURL.then(data => {
+        savedData.src = Utils.sanitisePath(data);
+      });
+
+      savedData.addEventListener("load", () => {
+        resolve(savedData);
+      });
+    });
+  }
+
+  public drawRotatedImage(savedData: HTMLImageElement, angle: number): void {
+    const canvas = this.canvas.getCanvas();
+
+    const angleInRad = angle * (Math.PI / 180);
+
+    const width = canvas.width;
+    const offset = width / 2;
+
+    const ctx = this.canvas.getDrawingContext();
+
+    const left = offset;
+    const top = offset;
+
+    ctx.clearRect(0, 0, width, width);
+
+    ctx.translate(left, top);
+    ctx.rotate(angleInRad);
+
+    ctx.drawImage(savedData, -offset, -offset, width * 2, width);
+
+    ctx.rotate(-angleInRad);
+    ctx.translate(-left, -top);
   }
 
   protected loadTilePalette(canvas, tiles) {
@@ -386,8 +426,6 @@ export class Renderer {
     moveSpeed: number,
     completed: () => any
   ) {
-    const canvas = this.canvas.getCanvas();
-
     if (direction > 0) {
       if (angle >= targetAngle) {
         completed();
@@ -402,24 +440,7 @@ export class Renderer {
       }
     }
 
-    const angleInRad = angle * (Math.PI / 180);
-
-    const offset = canvas.width / 2;
-
-    const ctx = this.canvas.getDrawingContext();
-
-    const left = offset;
-    const top = offset;
-
-    this.canvas.wipeCanvas("rgba(0,0,0,0.1)");
-
-    ctx.translate(left, top);
-    ctx.rotate(angleInRad);
-
-    ctx.drawImage(savedData, -offset, -offset);
-
-    ctx.rotate(-angleInRad);
-    ctx.translate(-left, -top);
+    this.drawRotatedImage(savedData, angle);
 
     angle += direction * (moveSpeed / 2);
 

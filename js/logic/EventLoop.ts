@@ -163,6 +163,15 @@ const renderEverything = (renderer, gameState: GameState) => {
   );
 };
 
+export const renderRotation = (
+  renderer: Renderer,
+  imageData,
+  drawAngle: number
+) => {
+  console.log("Draw at " + drawAngle);
+  renderer.drawRotatedImage(imageData, drawAngle);
+};
+
 // create empty renderMap based on boardSize, and then apply each player's position to it
 const createRenderMapFromPlayers = (
   players: Player[],

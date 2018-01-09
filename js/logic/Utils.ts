@@ -113,4 +113,12 @@ export class Utils {
       return collectable;
     }, 0);
   }
+
+  public static sanitisePath(path: string): string {
+    const cleanFrom = path.charAt(0) === '"' ? path.substr(1) : path;
+
+    return cleanFrom.charAt(cleanFrom.length - 1) === '"'
+      ? cleanFrom.substr(0, cleanFrom.length - 1)
+      : cleanFrom;
+  }
 }

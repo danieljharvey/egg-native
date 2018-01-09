@@ -56,11 +56,11 @@ const doGameMove = (gameState: GameState, timePassed: number): GameState => {
     if (levelIsCompleted(newGameState.board, newerGameState.players)) {
       return newerGameState.modify({
         outcome: "complete"
-      })
+      });
     } else {
       return newerGameState.modify({
         outcome: ""
-      })
+      });
     }
   }
 
@@ -125,10 +125,10 @@ const levelIsCompleted = (board: Board, players: Player[]): boolean => {
     return true;
   }
   return false;
-}
+};
 
- // get total outstanding points left to grab on board
- const countCollectable = (board: Board): number => {
+// get total outstanding points left to grab on board
+const countCollectable = (board: Board): number => {
   const tiles = board.getAllTiles();
   return tiles.reduce((collectable, tile) => {
     const score = tile.get("collectable");
@@ -138,7 +138,7 @@ const levelIsCompleted = (board: Board, players: Player[]): boolean => {
       return collectable;
     }
   }, 0);
-}
+};
 
 const countPlayers = (players: Player[]): number => {
   return players.reduce((total, player) => {
@@ -148,4 +148,4 @@ const countPlayers = (players: Player[]): number => {
       return total;
     }
   }, 0);
-}
+};

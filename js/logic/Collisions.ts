@@ -9,27 +9,27 @@ import { Utils } from "./Utils";
 import * as _ from "ramda";
 
 export const checkAllCollisions = (players: Player[]): Player[] => {
-  const combinations = this.getAllPlayerCombinations(players);
+  const combinations = getAllPlayerCombinations(players);
 
   // only one egg, do nothing
   if (combinations.length === 0) {
     return players;
   }
 
-  const collided = this.findCollisions(combinations, players);
+  const collided = findCollisions(combinations, players);
 
   if (collided.length === 0) {
     return players;
   }
 
-  const oldPlayers = this.removeCollidedPlayers(collided, players);
+  const oldPlayers = removeCollidedPlayers(collided, players);
 
-  const newPlayers = this.createNewPlayers(collided, players);
+  const newPlayers = createNewPlayers(collided, players);
 
-  const allPlayers = this.combinePlayerLists(oldPlayers, newPlayers);
+  const allPlayers = combinePlayerLists(oldPlayers, newPlayers);
 
   return allPlayers;
-}
+};
 
 export const combinePlayerLists = (
   oldPlayers: Player[],
@@ -43,7 +43,7 @@ export const combinePlayerLists = (
     allPlayers.push(player);
   });
   return fromJS(allPlayers);
-}
+};
 
 // send an array of pairs of player ids, returns all that collide
 export const findCollisions = (
@@ -51,11 +51,11 @@ export const findCollisions = (
   players: Player[]
 ): number[][] => {
   return combinations.filter(comb => {
-    const player1 = this.fetchPlayerByID(players, comb[0]);
-    const player2 = this.fetchPlayerByID(players, comb[1]);
-    return this.checkCollision(player1, player2);
+    const player1 = fetchPlayerByID(players, comb[0]);
+    const player2 = fetchPlayerByID(players, comb[1]);
+    return checkCollision(player1, player2);
   });
-}
+};
 
 // returns all non-collided players
 // collided is any number of pairs of IDs, ie [[1,3], [3,5]]
@@ -72,20 +72,20 @@ export const removeCollidedPlayers = (
     }
     return false;
   });
-}
+};
 
 // go through each collided pair and combine the players to create new ones
 export const createNewPlayers = (collided, players: Player[]): Player[] => {
   return collided.reduce((newPlayers, collidedIDs) => {
-    const player1 = this.fetchPlayerByID(players, collidedIDs[0]);
-    const player2 = this.fetchPlayerByID(players, collidedIDs[1]);
+    const player1 = fetchPlayerByID(players, collidedIDs[0]);
+    const player2 = fetchPlayerByID(players, collidedIDs[1]);
     if (player1 === null || player2 === null) {
       return newPlayers;
     }
-    const newOnes = this.combinePlayers(player1, player2);
+    const newOnes = combinePlayers(player1, player2);
     return newPlayers.concat(newOnes);
   }, []);
-}
+};
 
 export const fetchPlayerByID = (players: Player[], id: number): Player => {
   const matching = players.filter(player => {
@@ -101,7 +101,7 @@ export const fetchPlayerByID = (players: Player[], id: number): Player => {
   return _.find(item => {
     return item !== undefined;
   }, matching);
-}
+};
 
 export const getAllPlayerCombinations = (players: Player[]): number[][] => {
   return players.reduce((total, player) => {
@@ -111,9 +111,9 @@ export const getAllPlayerCombinations = (players: Player[]): number[][] => {
     const combos = otherPlayers.map(otherPlayer => {
       return [player.id, otherPlayer.id];
     });
-    return total.concat(this.cleanCombos(combos));
+    return total.concat(cleanCombos(combos));
   }, []);
-}
+};
 
 // un-immutables values for sanity's sake
 export const cleanCombos = (combo: any): number[] => {
@@ -121,13 +121,13 @@ export const cleanCombos = (combo: any): number[] => {
     return combo.toJS();
   }
   return combo;
-}
+};
 
 export const getAllPlayerIDs = (players: Player[]) => {
   return players.map(player => {
     return player.id;
   });
-}
+};
 
 // only deal with horizontal collisions for now
 export const checkCollision = (player1: Player, player2: Player) => {
@@ -166,7 +166,7 @@ export const checkCollision = (player1: Player, player2: Player) => {
 
   // nothing changes
   return false;
-}
+};
 
 export const chooseHigherLevelPlayer = (player1: Player, player2: Player) => {
   if (player1.value > player2.value) {
@@ -178,11 +178,11 @@ export const chooseHigherLevelPlayer = (player1: Player, player2: Player) => {
   if (player1.value === player2.value) {
     return player1;
   }
-}
+};
 
 export const combinePlayers = (player1: Player, player2: Player): Player[] => {
   const newValue = player1.value + player2.value;
-  const higherPlayer = this.chooseHigherLevelPlayer(player1, player2);
+  const higherPlayer = chooseHigherLevelPlayer(player1, player2);
 
   const newPlayerType = Utils.getPlayerByValue(playerTypes, newValue);
 
@@ -196,4 +196,4 @@ export const combinePlayers = (player1: Player, player2: Player): Player[] => {
   });
 
   return [player1.modify(newPlayerParams)];
-}
+};

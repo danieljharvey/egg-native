@@ -9,14 +9,14 @@ import * as Map from "./Map";
 export const checkAllPlayerTileActions = (gameState: GameState): GameState => {
   return gameState.players.reduce(
     (currentGameState: GameState, player: Player) => {
-      const updated = this.checkPlayerTileAction(
+      const updated = checkPlayerTileAction(
         player,
         currentGameState.board,
         currentGameState.score,
         currentGameState.outcome
       );
 
-      const postCrateBoard = this.checkTileBelowPlayer(player, updated.board);
+      const postCrateBoard = checkTileBelowPlayer(player, updated.board);
 
       return gameState.modify({
         board: postCrateBoard,
@@ -26,7 +26,7 @@ export const checkAllPlayerTileActions = (gameState: GameState): GameState => {
     },
     gameState
   );
-}
+};
 
 export const checkPlayerTileAction = (
   player: Player,
@@ -91,7 +91,7 @@ export const checkPlayerTileAction = (
     outcome,
     score
   };
-}
+};
 
 // basically, do we need to smash the block below?
 export const checkTileBelowPlayer = (player: Player, board: Board): Board => {
@@ -118,6 +118,4 @@ export const checkTileBelowPlayer = (player: Player, board: Board): Board => {
     return board.modify(belowCoords.x, belowCoords.y, newTileWithCoords);
   }
   return board;
-}
-
-
+};

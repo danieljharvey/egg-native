@@ -1,9 +1,13 @@
-import board from "../modules/Board/boardReducer"
+import board from "../modules/Board/boardReducer";
 
-import { combineReducers } from 'redux'
+import { createStore, applyMiddleware } from "redux";
+import { combineReducers } from "redux";
+import thunk from "redux-thunk";
 
 const eggNative = combineReducers({
   board
-})
+});
 
-export default eggNative
+const store = createStore(eggNative, applyMiddleware(thunk));
+
+export default store;

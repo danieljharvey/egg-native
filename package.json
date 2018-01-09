@@ -30,8 +30,14 @@
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest"
     },
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
-    "moduleFileExtensions": ["ts", "tsx", "js"],
-    "transformIgnorePatterns": ["node_modules/(?!react-native-canvas)"]
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!react-native-canvas)"
+    ]
   },
   "dependencies": {
     "@types/form-data": "^2.2.1",
@@ -53,6 +59,7 @@
     "react-native-swipe-gestures": "^1.0.2",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
     "tsmonad": "^0.8.0"
   }
 }

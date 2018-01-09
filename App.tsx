@@ -3,10 +3,8 @@ import { StyleSheet, Text, View } from "react-native";
 import Board from "./js/modules/Board/BoardContainer";
 
 import { Provider } from "react-redux";
-import { createStore } from "redux";
-import eggNative from "./js/store";
 
-const store = createStore(eggNative);
+import store from "./js/store";
 
 export default class App extends React.Component {
   public render() {

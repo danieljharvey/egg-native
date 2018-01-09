@@ -1,4 +1,5 @@
 // responsible for the care and feeding of the html canvas and it's size on screen etc etc etc
+import { Image } from "react-native-canvas";
 
 export default class Canvas {
   protected canvas: RNCanvasElement;
@@ -37,5 +38,15 @@ export default class Canvas {
     const { width, height } = boardSize.getData();
     const tileSize = Math.floor(this.width / width);
     return tileSize;
+  }
+
+  public getImageData(): Image {
+    const cw = this.canvas.width;
+    const ch = this.canvas.height;
+
+    const savedData = new Image(this.canvas, cw, ch) as any;
+    savedData.src = this.canvas.toDataURL("image/png");
+
+    return savedData;
   }
 }

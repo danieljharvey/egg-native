@@ -82,7 +82,7 @@ export class Renderer {
     }
 
     const canvas = this.canvas.getCanvas();
-    const savedData = this.getImageData(canvas);
+    const savedData = this.canvas.getImageData();
     this.rotating = true;
 
     if (clockwise) {
@@ -90,16 +90,6 @@ export class Renderer {
     } else {
       this.drawRotated(savedData, -1, 0, -90, moveSpeed, completed);
     }
-  }
-
-  protected getImageData(canvas: RNCanvasElement): HTMLImageElement {
-    const cw = canvas.width;
-    const ch = canvas.height;
-
-    const savedData = new Image();
-    savedData.src = canvas.toDataURL("image/png");
-
-    return savedData;
   }
 
   protected loadTilePalette(canvas, tiles) {

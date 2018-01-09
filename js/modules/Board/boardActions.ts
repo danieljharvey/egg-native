@@ -61,7 +61,6 @@ export const rotateLeft = () => {
     const state = getState();
 
     state.board.renderer.getImageData().then(imageData => {
-      console.log("captured image data", imageData);
       dispatch(storeImageData(imageData));
       // now start the turning part
 

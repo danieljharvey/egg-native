@@ -18,23 +18,11 @@ import * as Movement from "./Movement";
 import { playerTypes } from "./PlayerTypes";
 import { Utils } from "./Utils";
 
-export const doAction = (
+// this is where we have to do a shitload of things
+export const doGameMove = (
   gameState: GameState,
-  action: string,
   timePassed: number
 ): GameState => {
-  if (action === "rotateLeft") {
-    return doRotate(gameState, false);
-  } else if (action === "rotateRight") {
-    return doRotate(gameState, true);
-  } else if (action === "") {
-    return doGameMove(gameState, timePassed);
-  }
-  return gameState;
-};
-
-// this is where we have to do a shitload of things
-const doGameMove = (gameState: GameState, timePassed: number): GameState => {
   // first get rid of old outcome
   const startGameState = gameState.modify({
     outcome: ""
@@ -93,7 +81,10 @@ const checkNearlyFinished = (gameState: GameState): Player[] => {
 
 // this rotates board and players
 // it DOES NOT do animation - not our problem
-const doRotate = (gameState: GameState, clockwise: boolean): GameState => {
+export const doRotate = (
+  gameState: GameState,
+  clockwise: boolean
+): GameState => {
   const rotations = gameState.rotations + 1;
 
   const boardSize = new BoardSize(gameState.board.getLength());

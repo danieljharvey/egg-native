@@ -1,6 +1,6 @@
 import board from "../modules/Board/boardReducer";
 
-import { createStore, applyMiddleware } from "redux";
+import { applyMiddleware, createStore } from "redux";
 import { combineReducers } from "redux";
 import thunk from "redux-thunk";
 

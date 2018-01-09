@@ -47,8 +47,7 @@ export default class BoardComponent extends React.Component<IBoardProps> {
   };
 
   public eventLoop = newTime => {
-    //const anim = window.requestAnimationFrame(this.eventLoop);
-    const anim = setTimeout(this.eventLoop, 500);
+    const anim = window.requestAnimationFrame(this.eventLoop);
     this.props.doGameMove(newTime);
   };
 
@@ -96,6 +95,7 @@ export default class BoardComponent extends React.Component<IBoardProps> {
         <TouchableHighlight onPress={() => this.props.togglePause()}>
           <Text>{pauseText}</Text>
         </TouchableHighlight>
+        <Text>{this.props.nextAction}</Text>
       </GestureRecognizer>
     );
   }

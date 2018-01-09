@@ -39,14 +39,4 @@ export default class Canvas {
     const tileSize = Math.floor(this.width / width);
     return tileSize;
   }
-
-  public getImageData(): Image {
-    const cw = this.canvas.width;
-    const ch = this.canvas.height;
-
-    const savedData = new Image(this.canvas, cw, ch) as any;
-    savedData.src = this.canvas.toDataURL("image/png");
-
-    return savedData;
-  }
 }

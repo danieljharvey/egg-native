@@ -33,7 +33,6 @@ export const handleCanvas = (canvas, levelData, callback) => {
     canvasClass,
     () => {
       canvasClass.wipeCanvas("#000000");
-      eventLoop(renderer, gameState, 1, 0);
       renderEverything(renderer, gameState);
       callback(renderer);
       // console.log("Renderer loaded!");
@@ -50,8 +49,8 @@ const getBoardFromData = (data): Board => {
 
 const player = new Player({
   coords: new Coords({
-    x: 2,
-    y: 2
+    x: 3,
+    y: 3
   }),
   ...playerTypes.egg,
   moveSpeed: 10,
@@ -74,45 +73,6 @@ export const createInitialGameState = levelData => {
     players: [player],
     board: getBoardFromData(levelData)
   });
-};
-
-// do next move, plop new state on pile, return new state
-export const getNewGameState = (
-  gameState: GameState,
-  action: string,
-  timePassed: number
-): GameState => {
-  const newGameState = doAction(gameState, action, timePassed);
-  // this.updateGameState(gameState, newGameState);
-  // this.playSounds(gameState, newGameState);
-  return newGameState;
-};
-
-export const eventLoop = (
-  renderer: Renderer,
-  gameState: GameState,
-  time: number,
-  lastTime: number
-) => {
-  const action = "";
-  const timePassed = calcTimePassed(time, lastTime);
-  const nextGameState = gameCycle(timePassed, action, renderer, gameState);
-  // const action = this.getNextAction();
-
-  /*const anim = window.requestAnimationFrame(newTime =>
-      eventLoop(renderer, nextGameState, newTime, time)
-    ); */
-};
-
-const gameCycle = (
-  timePassed: number,
-  action: string,
-  renderer: Renderer,
-  gameState: GameState
-): GameState => {
-  const nextGameState = getNewGameState(gameState, action, timePassed);
-  renderChanges(renderer, gameState, nextGameState);
-  return nextGameState;
 };
 
 export const renderChanges = (
@@ -168,7 +128,6 @@ export const renderRotation = (
   imageData,
   drawAngle: number
 ) => {
-  console.log("Draw at " + drawAngle);
   renderer.drawRotatedImage(imageData, drawAngle);
 };
 

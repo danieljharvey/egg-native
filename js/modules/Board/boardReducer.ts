@@ -14,11 +14,9 @@ import { GameState } from "../../objects/GameState";
 
 import * as savedLevelData from "../../assets/levels/1.json";
 
-import {
-  calcTimePassed,
-  createInitialGameState,
-  getNewGameState
-} from "../../logic/EventLoop";
+import { calcTimePassed, createInitialGameState } from "../../logic/EventLoop";
+
+import { doGameMove, doRotate } from "../../logic/TheEgg";
 
 interface IBoardState {
   levelData: {};
@@ -58,22 +56,32 @@ const startTurningLeft = (state: IBoardState) => {
 };
 
 // todo - use action.newTime to temper the speed here like other moves
-const turnLeft = (state: IBoardState, action) => {
-  const moveSpeed = 10;
+const turnLeft = (state: IBoardState, action, timePassed: number) => {
+  const moveSpeed = 5;
 
-  const drawAngle = (state.drawAngle += -1 * (moveSpeed / 2));
+  const drawAngle = (state.drawAngle += -1 * (moveSpeed / 10 * timePassed));
 
   if (drawAngle < -90) {
     // done
     return {
       ...state,
       drawAngle: 0,
-      nextAction: ""
+      nextAction: "",
+      lastTime: action.newTime,
+      gameState: doRotate(state.gameState, false)
     };
   }
   return {
     ...state,
-    drawAngle
+    drawAngle,
+    lastTime: action.newTime
+  };
+};
+
+const addNewTime = (state, newTime) => {
+  return {
+    ...state,
+    lastTime: newTime
   };
 };
 
@@ -92,12 +100,18 @@ const board = (state: IBoardState = initialState, action) => {
         return initialBoard(state, state.levelData);
       }
 
-      if (state.nextAction === "rotateLeft") {
-        return state;
-      }
+      const timePassed = calcTimePassed(action.newTime, state.lastTime);
 
       if (state.nextAction === "turnLeft") {
-        return turnLeft(state, action);
+        return turnLeft(state, action, timePassed);
+      }
+
+      if (state.nextAction === "rotateLeft") {
+        return addNewTime(state, action.newTime);
+      }
+
+      if (state.nextAction !== "") {
+        return addNewTime(state, action.newTime);
       }
 
       // quickly set up inital state here for now
@@ -105,12 +119,8 @@ const board = (state: IBoardState = initialState, action) => {
         state.gameState === null
           ? createInitialGameState(state.levelData)
           : state.gameState;
-      const timePassed = calcTimePassed(action.newTime, state.lastTime);
-      const newGameState = getNewGameState(
-        gameState,
-        state.nextAction,
-        timePassed
-      );
+
+      const newGameState = doGameMove(gameState, timePassed);
       return {
         ...state,
         gameState: newGameState,
@@ -128,6 +138,7 @@ const board = (state: IBoardState = initialState, action) => {
         ...state,
         imageData: action.imageData
       };
+
     case START_ROTATE_LEFT:
       return {
         ...state,

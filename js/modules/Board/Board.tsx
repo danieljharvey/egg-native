@@ -52,9 +52,6 @@ export default class BoardComponent extends React.Component<IBoardProps> {
   };
 
   public shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps.paused !== this.props.paused) {
-      return true;
-    }
     const oldGameState = this.props.gameState;
     const newGameState = nextProps.gameState;
     // to stop it fucking up on first load before we have a proper title screen and loading thing
@@ -71,7 +68,10 @@ export default class BoardComponent extends React.Component<IBoardProps> {
     } else {
       EventLoop.renderChanges(this.props.renderer, oldGameState, newGameState);
     }
-    return false;
+    return (
+      nextProps.paused !== this.props.paused ||
+      nextProps.nextAction !== this.props.nextAction
+    );
   }
 
   public render() {

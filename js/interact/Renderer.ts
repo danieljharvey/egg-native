@@ -96,19 +96,18 @@ export class Renderer {
     return new Promise((resolve, reject) => {
       const canvas = this.canvas.getCanvas();
 
-      console.log("canvas size", canvas.width, canvas.height);
+      const size = canvas.width;
+      // console.log("canvas size", canvas.width, canvas.height);
 
-      const savedData: RNImage = new Image(canvas, canvas.width, canvas.height);
+      const savedData: RNImage = new Image(canvas, size, size);
       const dataURL = canvas.toDataURL("image/png");
       dataURL.then(data => {
         savedData.src = Utils.sanitisePath(data);
-        console.log(savedData.src);
-        resolve(savedData);
       });
 
-      /*savedData.addEventListener("load", () => {
-        
-      });*/
+      savedData.addEventListener("load", () => {
+        resolve(savedData);
+      });
     });
   }
 
@@ -130,7 +129,17 @@ export class Renderer {
     ctx.translate(left, top);
     ctx.rotate(angleInRad);
 
-    ctx.drawImage(savedData, -offset, -offset, width * 2, width);
+    ctx.drawImage(
+      savedData,
+      0,
+      0,
+      width * 2,
+      width * 2,
+      -offset,
+      -offset,
+      width,
+      width
+    );
 
     ctx.rotate(-angleInRad);
     ctx.translate(-left, -top);

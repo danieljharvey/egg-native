@@ -16,8 +16,8 @@ export default class Canvas {
 
   public sizeCanvas(width, height) {
     const size = Math.min(width, height);
-    this.canvas.width = size;
     this.canvas.height = size;
+    this.canvas.width = size;
   }
 
   public getDrawingContext() {

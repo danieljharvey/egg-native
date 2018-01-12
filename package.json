@@ -41,6 +41,7 @@
     "@types/node": "^8.5.7",
     "@types/webaudioapi": "^0.0.27",
     "eslint": "^4.15.0",
+    "gl-react": "^2.3.1",
     "immutable": "^3.8.2",
     "object.entries": "^1.0.4",
     "prettier": "^1.9.2",
@@ -52,8 +53,10 @@
     "react-native-fs": "^2.8.5",
     "react-native-image-to-base64": "^0.1.0",
     "react-native-swipe-gestures": "^1.0.2",
+    "react-native-webgl": "^0.8.0",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
+    "three": "^0.89.0",
     "tsmonad": "^0.8.0"
   }
 }

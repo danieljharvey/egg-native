@@ -2,18 +2,6 @@
   "name": "egg",
   "version": "0.1.0",
   "private": true,
-  "devDependencies": {
-    "@types/react": "^16.0.25",
-    "@types/react-native": "^0.51.9",
-    "babel-preset-react-native-stage-0": "^1.0.1",
-    "jest": "^21.2.1",
-    "react-native-typescript-transformer": "^1.1.4",
-    "react-test-renderer": "16.0.0-beta.5",
-    "ts-jest": "^21.2.4",
-    "tslint": "^5.8.0",
-    "tslint-config-prettier": "^1.6.0",
-    "typescript": "^2.6.1"
-  },
   "scripts": {
     "start": "react-native start",
     "android": "react-native run-android",
@@ -29,13 +17,19 @@
       ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
-    ]
+    "moduleFileExtensions": ["ts", "tsx", "js"]
   },
   "dependencies": {
+    "@types/react": "^16.0.25",
+    "@types/react-native": "^0.51.9",
+    "babel-preset-react-native-stage-0": "^1.0.1",
+    "jest": "^21.2.1",
+    "react-native-typescript-transformer": "^1.1.4",
+    "react-test-renderer": "16.0.0-beta.5",
+    "ts-jest": "^21.2.4",
+    "tslint": "^5.8.0",
+    "tslint-config-prettier": "^1.6.0",
+    "typescript": "^2.6.1",
     "@types/form-data": "^2.2.1",
     "@types/jest": "^22.0.1",
     "@types/node": "^8.5.7",

@@ -30,9 +30,19 @@
   version "16.0.25"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.0.25.tgz#bf696b83fe480c5e0eff4335ee39ebc95884a1ed"
 
+"@types/three@^0.89.3":
+  version "0.89.3"
+  resolved "https://registry.yarnpkg.com/@types/three/-/three-0.89.3.tgz#a871a1286a0038e048464ffeb039f2b50e658a22"
+  dependencies:
+    "@types/webvr-api" "*"
+
 "@types/webaudioapi@^0.0.27":
   version "0.0.27"
   resolved "https://registry.yarnpkg.com/@types/webaudioapi/-/webaudioapi-0.0.27.tgz#8a3f98eaa07cb577be2dae22311d37c3b545f74f"
+
+"@types/webvr-api@*":
+  version "0.0.31"
+  resolved "https://registry.yarnpkg.com/@types/webvr-api/-/webvr-api-0.0.31.tgz#f6061fe88a035d34a8b6a0c55f8758901ec8a08e"
 
 abab@^1.0.3:
   version "1.0.4"

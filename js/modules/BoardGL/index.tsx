@@ -36,50 +36,64 @@ export default class WebGLFace extends React.Component {
     let scene;
     const cubes = [];
 
-    const createCube = (threeScene) => (i) => {
-      const size = i * 25
+    const createTexture = (asset) => {
+      return new Promise((resolve, reject) => {
+        const textureObj = new THREE.Texture();
+
+        const properties = renderer.properties.get(textureObj);
+        rngl.loadTexture({ yflip: true, image: asset })
+          .then(({ texture }) => {
+            properties.__webglTexture = texture;
+            properties.__webglInit = true;
+            texture.needsUpdate = true;
+
+            const material = new THREE.MeshBasicMaterial({
+              map: textureObj,
+              transparent: true
+            });
+
+            resolve(material)
+        })
+      })
+    }
+
+    const createCube = (threeScene) => (x,y, material) => {
+      const size = 50
 
       const geometry = new THREE.BoxGeometry(size, size, size);
 
-      const asset = require("../../assets/images/tiles/cacti.png")
-      
-      const textureObj = new THREE.Texture();
-
-      const properties = renderer.properties.get(textureObj);
-      rngl.loadTexture({ yflip: true, image: asset })
-        .then(({ texture }) => {
-          properties.__webglTexture = texture;
-          properties.__webglInit = true;
-          texture.needsUpdate = true;
-
-      })
-
-      const material = new THREE.MeshBasicMaterial({
-        map: textureObj,
-        // transparent: true
-      });
-
       const cube = new THREE.Mesh(geometry, material);
-      cube.position.y = i * 150;
-      cube.position.x = i * 10;
+      cube.position.y = y * size
+      cube.position.x = x * size
 
       threeScene.add(cube);      
       cubes.push(cube)
     }
 
     function init() {
-      camera = new THREE.PerspectiveCamera(75, width / height, 1, 1100);
-      camera.position.y = 500;
-      camera.position.z = 1000;
+      camera = new THREE.PerspectiveCamera(75, width / height, 1, 1000);
+      camera.position.x = 250
+      camera.position.y = 250;
+      camera.position.z = 400;
       scene = new THREE.Scene();
+      const asset = require("../../assets/images/tiles/cacti.png")
 
-      for (let i = 0; i < 9; i++) {
-        createCube(scene)(i)
-      }
+      createTexture(asset).then(material => {
+        for (let x = 0; x < 10; x++) {
+          for (let y = 0; y < 10; y++) {
+            createCube(scene)(x,y, material)
+          }
+        } 
+      })
+      
+
     }
 
+
+    
+
     const animate = () => {
-      this.requestId = requestAnimationFrame(animate);
+      
       renderer.render(scene, camera);
 
       cubes.map(cube => {
@@ -90,6 +104,8 @@ export default class WebGLFace extends React.Component {
 
       gl.flush();
       rngl.endFrame();
+
+      this.requestId = requestAnimationFrame(animate);
     };
 
     init();

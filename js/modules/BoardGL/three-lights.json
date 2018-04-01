@@ -1,0 +1,177 @@
+{
+	"metadata": {
+		"version": 4.3,
+		"type": "Object",
+		"generator": "ObjectExporter"
+	},
+	"geometries": [
+		{
+			"uuid": "7D5EC87B-6777-4168-91AD-9DFEFBD53186",
+			"type": "PlaneGeometry",
+			"width": 200,
+			"height": 200,
+			"widthSegments": 1,
+			"heightSegments": 1
+		},
+		{
+			"uuid": "AB04539F-11C1-466C-98D5-CCAF98475A71",
+			"type": "BoxGeometry",
+			"width": 100,
+			"height": 100,
+			"depth": 100,
+			"widthSegments": 1,
+			"heightSegments": 1,
+			"depthSegments": 1
+		},
+		{
+			"uuid": "79AC4528-9C9E-4391-B184-9F506A808685",
+			"type": "BoxGeometry",
+			"width": 100,
+			"height": 100,
+			"depth": 100,
+			"widthSegments": 1,
+			"heightSegments": 1,
+			"depthSegments": 1
+		},
+		{
+			"uuid": "69448A10-CE5D-45BB-8AFC-421CE7E93B44",
+			"type": "BoxGeometry",
+			"width": 100,
+			"height": 100,
+			"depth": 100,
+			"widthSegments": 1,
+			"heightSegments": 1,
+			"depthSegments": 1
+		},
+		{
+			"uuid": "B6C5DB63-BE49-4412-9370-84B68AF00933",
+			"type": "BoxGeometry",
+			"width": 100,
+			"height": 100,
+			"depth": 100,
+			"widthSegments": 1,
+			"heightSegments": 1,
+			"depthSegments": 1
+		}],
+	"materials": [
+		
+		{
+			"uuid": "D0E6AA4D-DDF5-4E59-9DC5-7D93E08714FD",
+			"type": "MeshPhongMaterial",
+			"color": 16777215,
+			"ambient": 16777215,
+			"emissive": 10,
+			"specular": 1118481,
+			"shininess": 70
+		},
+		{
+			"uuid": "1C211F16-82DA-4039-8843-5D345681A107",
+			"type": "MeshPhongMaterial",
+			"color": 16777215,
+			"ambient": 16777215,
+			"emissive": 0,
+			"specular": 1118481,
+			"shininess": 30
+		},
+		{
+			"uuid": "A385EDCA-4595-460F-8AFB-230F092CD086",
+			"type": "MeshPhongMaterial",
+			"color": 16777215,
+			"ambient": 16777215,
+			"emissive": 0,
+			"specular": 1118481,
+			"shininess": 30
+		},
+		{
+			"uuid": "895E2D03-1302-409C-AE2B-B7DA692F7B0B",
+			"type": "MeshPhongMaterial",
+			"color": 16777215,
+			"ambient": 16777215,
+			"emissive": 0,
+			"specular": 1118481,
+			"shininess": 30
+		},
+		{
+			"uuid": "8F03A000-2A3C-48C9-AECF-50FC8D791950",
+			"type": "MeshPhongMaterial",
+			"color": 16777215,
+			"ambient": 16777215,
+			"emissive": 0,
+			"specular": 1118481,
+			"shininess": 30
+		}],
+	"object": {
+		"uuid": "875D47A0-EA38-4178-9AA4-4326598C69FA",
+		"type": "Scene",
+		"name": "Scene",
+		"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],
+		"children": [
+			{
+				"uuid": "F08A6D07-260B-49F0-8601-32A8174CA055",
+				"type": "Mesh",
+				"name": "Flat ground",
+				"geometry": "7D5EC87B-6777-4168-91AD-9DFEFBD53186",
+				"material": "D0E6AA4D-DDF5-4E59-9DC5-7D93E08714FD",
+				"matrix": [5,0,0,0,0,0.000031633975595468655,5,0,0,-1,0.0000063267948462453205,0,0,0,0,1]
+			},
+			{
+				"uuid": "CD626DE5-6BD2-40CE-96D5-FA7E9D114F4E",
+				"type": "Mesh",
+				"name": "Box 2",
+				"geometry": "AB04539F-11C1-466C-98D5-CCAF98475A71",
+				"material": "1C211F16-82DA-4039-8843-5D345681A107",
+				"matrix": [1,0,0,0,0,1,0,0,0,0,10,0,500,0,0,1]
+			},
+			{
+				"uuid": "17734375-CB47-42A6-8D7C-69D71D0B2FC7",
+				"type": "Mesh",
+				"name": "Box 3",
+				"geometry": "79AC4528-9C9E-4391-B184-9F506A808685",
+				"material": "A385EDCA-4595-460F-8AFB-230F092CD086",
+				"matrix": [10,0,0,0,0,1,0,0,0,0,1,0,0,0,500,1]
+			},
+			{
+				"uuid": "F1BE1CE6-C4FD-4EE5-9C73-11D894410F73",
+				"type": "Mesh",
+				"name": "Box 4",
+				"geometry": "69448A10-CE5D-45BB-8AFC-421CE7E93B44",
+				"material": "895E2D03-1302-409C-AE2B-B7DA692F7B0B",
+				"matrix": [1,0,0,0,0,1,0,0,0,0,10,0,-500,0,0,1]
+			},
+			{
+				"uuid": "6D11A020-65E5-44C5-8851-E92B7B79AF4F",
+				"type": "Mesh",
+				"name": "Box 5",
+				"geometry": "B6C5DB63-BE49-4412-9370-84B68AF00933",
+				"material": "8F03A000-2A3C-48C9-AECF-50FC8D791950",
+				"matrix": [10,0,0,0,0,1,0,0,0,0,1,0,0,0,-500,1]
+			},
+			{
+				"uuid": "9025DA10-49EF-4E5D-B73D-DD29CD8EBECE",
+				"type": "PointLight",
+				"name": "PointLight Red",
+				"color": 16726098,
+				"intensity": 0.5,
+				"distance": 0,
+				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,250,500,250,1]
+			},
+			{
+				"uuid": "CC4ED0A8-502F-471C-87FB-9008B49D88F1",
+				"type": "PointLight",
+				"name": "PointLight Green",
+				"color": 6027045,
+				"intensity": 0.5,
+				"distance": 0,
+				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,-250,500,250,1]
+			},
+			{
+				"uuid": "1473FC6D-6539-45CA-BC85-2888A314038C",
+				"type": "PointLight",
+				"name": "PointLight Blue",
+				"color": 3821053,
+				"intensity": 0.5,
+				"distance": 0,
+				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,-250,500,-250,1]
+			}]
+	}
+}
